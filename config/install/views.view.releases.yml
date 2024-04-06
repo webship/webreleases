@@ -70,7 +70,7 @@ display:
           element_wrapper_class: ''
           element_default_classes: true
           empty: ''
-          hide_empty: true
+          hide_empty: false
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
@@ -91,7 +91,7 @@ display:
         type: full
         options:
           offset: 0
-          items_per_page: 9
+          items_per_page: 10
           total_pages: null
           id: 0
           tags:
@@ -107,7 +107,7 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
-          quantity: 9
+          quantity: 10
       exposed_form:
         type: basic
         options:
@@ -144,10 +144,10 @@ display:
           exposed: false
           granularity: second
       arguments:
-        field_product_target_id:
-          id: field_product_target_id
-          table: node__field_product
-          field: field_product_target_id
+        field_product_name_target_id:
+          id: field_product_name_target_id
+          table: node__field_product_name
+          field: field_product_name_target_id
           relationship: none
           group_type: group
           admin_label: ''
@@ -268,7 +268,7 @@ display:
           id: title
           table: node_field_data
           field: title
-          relationship: field_product
+          relationship: field_product_name
           group_type: group
           admin_label: ''
           entity_type: node
@@ -308,13 +308,13 @@ display:
         relationships: false
         arguments: false
       relationships:
-        field_product:
-          id: field_product
-          table: node__field_product
-          field: field_product
+        field_product_name:
+          id: field_product_name
+          table: node__field_product_name
+          field: field_product_name
           relationship: none
           group_type: group
-          admin_label: 'field_product: Content'
+          admin_label: 'field_product_name: Content'
           plugin_id: standard
           required: true
       display_description: ''
@@ -339,6 +339,11 @@ display:
     display_plugin: block
     position: 2
     display_options:
+      pager:
+        type: some
+        options:
+          offset: 0
+          items_per_page: 10
       style:
         type: html_list
         options:
@@ -354,6 +359,7 @@ display:
           relationship: none
           view_mode: archive
       defaults:
+        pager: false
         style: false
         row: false
         footer: false
@@ -382,7 +388,6 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
-        - url.query_args
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
