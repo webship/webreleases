@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.archive
+label: Archive
+description: ''
+targetEntityType: node
+cache: true

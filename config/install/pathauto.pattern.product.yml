@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: product
+label: Product
+type: 'canonical_entities:node'
+pattern: 'products/[node:title]'
+selection_criteria:
+  6cb374c1-fa26-4a0d-bfe8-d9fa4d76f396:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: 6cb374c1-fa26-4a0d-bfe8-d9fa4d76f396
+    context_mapping:
+      node: node
+    bundles:
+      product: product
+selection_logic: and
+weight: -5
+relationships: {  }

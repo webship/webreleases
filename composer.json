@@ -1,0 +1,31 @@
+{
+  "name": "drupal/webreleases",
+  "description": "Provide product and release content type along with customized views for the products page and dedicated releases pages.",
+  "type": "drupal-module",
+  "license": "GPL-1.0-or-later",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Webship",
+      "homepage": "http://webship.org",
+      "role": "Maintainer"
+    }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/webreleases",
+    "source": "http://cgit.drupalcode.org/webreleases"
+  },
+  "repositories": {
+    "drupal": {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    }
+  },
+  "require": {
+    "drupal/core": "~10.2.0",
+    "drupal/webpatches": "~10.0",
+    "drupal/webdev": "~10.0",
+    "drupal/webassets": "~10.0",
+    "drupal/manage_display": "~3.0"
+  }
+}

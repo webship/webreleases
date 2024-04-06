@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: release
+label: Release
+type: 'canonical_entities:node'
+pattern: 'products/[node:field_product]/releases/[node:title]'
+selection_criteria:
+  67cbbc54-e06b-45d1-a4bc-d2ff7e3b8f9c:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: 67cbbc54-e06b-45d1-a4bc-d2ff7e3b8f9c
+    context_mapping:
+      node: node
+    bundles:
+      release: release
+selection_logic: and
+weight: -5
+relationships: {  }

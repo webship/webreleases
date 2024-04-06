@@ -1,0 +1,17 @@
+name: Web Releases
+description: "Provide product and release content type along with customized views for the products page and dedicated releases pages."
+type: module
+core_version_requirement: ~10.2.0
+dependencies:
+  - drupal:path
+  - drupal:text
+  - drupal:node
+  - drupal:user
+  - drupal:menu_ui
+  - drupal:content_moderation
+  - drupal:field_layout
+  - drupal:media_library
+  - drupal:layout_builder
+  - drupal:layout_discovery
+  - manage_display:manage_display
+  - webassets:webassets

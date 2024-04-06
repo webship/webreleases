@@ -1,0 +1,108 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.full
+    - field.field.node.release.body
+    - field.field.node.release.field_product
+    - field.field.node.release.field_release_image
+    - node.type.release
+  module:
+    - layout_builder
+    - layout_discovery
+    - manage_display
+    - text
+third_party_settings:
+  layout_builder:
+    enabled: true
+    allow_custom: false
+    sections:
+      -
+        layout_id: layout_onecol
+        layout_settings:
+          label: ''
+        components:
+          2029d108-b50c-4eba-8d6b-12bf313f2bd7:
+            uuid: 2029d108-b50c-4eba-8d6b-12bf313f2bd7
+            region: content
+            configuration:
+              id: 'field_block:node:release:field_release_image'
+              label: 'Release Image'
+              label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: entity_reference_entity_view
+                label: hidden
+                settings:
+                  view_mode: ultrawide
+                third_party_settings: {  }
+            weight: 5
+            additional: {  }
+          597ea68d-b996-419a-9eda-c263473b009c:
+            uuid: 597ea68d-b996-419a-9eda-c263473b009c
+            region: content
+            configuration:
+              id: 'field_block:node:release:body'
+              label: 'Release notes'
+              label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: text_default
+                label: hidden
+                settings: {  }
+                third_party_settings: {  }
+            weight: 6
+            additional: {  }
+        third_party_settings: {  }
+id: node.release.full
+targetEntityType: node
+bundle: release
+mode: full
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_product:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_release_image:
+    type: entity_reference_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+  title:
+    type: title
+    label: hidden
+    settings:
+      link_to_entity: true
+      tag: h2
+    third_party_settings: {  }
+    weight: -49
+    region: content
+hidden:
+  created: true
+  uid: true
