@@ -1,3 +1,4 @@
+uuid: ed4aa5e3-32ed-4726-bff0-886c4be32f91
 langcode: en
 status: true
 dependencies:
@@ -375,7 +376,7 @@ display:
           plugin_id: text
           empty: false
           content:
-            value: '<a href="[current-page:title]/releases"> All releases </a>'
+            value: '<a href="[current-page:url]/releases"> All releases </a>'
             format: full_html
           tokenize: false
       display_extenders:
