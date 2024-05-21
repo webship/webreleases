@@ -2,12 +2,16 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.base_field_override.node.release.title
     - field.field.node.release.body
-    - field.field.node.release.field_product
+    - field.field.node.release.field_product_name
     - field.field.node.release.field_release_image
+    - field.field.node.release.field_release_link
     - node.type.release
   module:
     - layout_builder
+    - layout_discovery
+    - link
     - manage_display
     - text
 third_party_settings:
@@ -83,7 +87,7 @@ third_party_settings:
             uuid: 5c43b09c-bd81-4e05-a728-4727942bcdea
             region: content
             configuration:
-              id: 'field_block:node:release:field_product'
+              id: 'field_block:node:release:field_product_name'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
@@ -94,6 +98,26 @@ third_party_settings:
                   link: true
                 third_party_settings: {  }
             weight: 4
+            additional: {  }
+          9cd841af-83ba-4bb8-ab6b-447ece509cc1:
+            uuid: 9cd841af-83ba-4bb8-ab6b-447ece509cc1
+            region: content
+            configuration:
+              id: 'field_block:node:release:field_release_link'
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              formatter:
+                type: link
+                label: above
+                settings:
+                  trim_length: 80
+                  url_only: false
+                  url_plain: false
+                  rel: ''
+                  target: ''
+                third_party_settings: {  }
+            weight: 5
             additional: {  }
         third_party_settings: {  }
 id: node.release.default
@@ -108,7 +132,7 @@ content:
     third_party_settings: {  }
     weight: 101
     region: content
-  field_product:
+  field_product_name:
     type: entity_reference_label
     label: above
     settings:
@@ -124,6 +148,18 @@ content:
       link: false
     third_party_settings: {  }
     weight: 102
+    region: content
+  field_release_link:
+    type: link
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 104
     region: content
   links:
     settings: {  }
@@ -142,3 +178,4 @@ content:
 hidden:
   created: true
   uid: true
+  

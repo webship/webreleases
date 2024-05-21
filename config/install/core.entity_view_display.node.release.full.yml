@@ -4,8 +4,9 @@ dependencies:
   config:
     - core.entity_view_mode.node.full
     - field.field.node.release.body
-    - field.field.node.release.field_product
+    - field.field.node.release.field_product_name
     - field.field.node.release.field_release_image
+    - field.field.node.release.field_release_link
     - node.type.release
   module:
     - layout_builder
@@ -59,6 +60,29 @@ third_party_settings:
                 third_party_settings: {  }
             weight: 6
             additional: {  }
+          b882eda7-6b78-45ce-9888-afa9f02f9216:
+            uuid: b882eda7-6b78-45ce-9888-afa9f02f9216
+            region: content
+            configuration:
+              id: 'field_block:node:release:field_release_link'
+              label: 'View the release'
+              label_display: visible
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: link
+                label: hidden
+                settings:
+                  trim_length: 100
+                  url_only: true
+                  url_plain: false
+                  rel: '0'
+                  target: _blank
+                third_party_settings: {  }
+            weight: 7
+            additional: {  }
         third_party_settings: {  }
 id: node.release.full
 targetEntityType: node
@@ -72,7 +96,7 @@ content:
     third_party_settings: {  }
     weight: 101
     region: content
-  field_product:
+  field_product_name:
     type: entity_reference_label
     label: above
     settings:
@@ -105,4 +129,5 @@ content:
     region: content
 hidden:
   created: true
+  field_release_link: true
   uid: true
