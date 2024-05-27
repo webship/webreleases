@@ -5,8 +5,9 @@ dependencies:
     - core.base_field_override.node.release.title
     - core.entity_view_mode.node.teaser
     - field.field.node.release.body
-    - field.field.node.release.field_product
+    - field.field.node.release.field_product_name
     - field.field.node.release.field_release_image
+    - field.field.node.release.field_release_link
     - node.type.release
   module:
     - layout_builder
@@ -128,6 +129,7 @@ content:
     region: content
 hidden:
   created: true
-  field_product: true
+  field_product_name: true
   field_release_image: true
+  field_release_link: true
   uid: true

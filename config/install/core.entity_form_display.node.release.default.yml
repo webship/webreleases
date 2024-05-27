@@ -3,13 +3,15 @@ status: true
 dependencies:
   config:
     - field.field.node.release.body
-    - field.field.node.release.field_product
+    - field.field.node.release.field_product_name
     - field.field.node.release.field_release_image
+    - field.field.node.release.field_release_link
     - node.type.release
   module:
     - content_moderation
     - field_layout
     - layout_discovery
+    - link
     - media_library
     - path
     - text
@@ -39,7 +41,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_product:
+  field_product_name:
     type: entity_reference_autocomplete
     weight: 123
     region: content
@@ -55,6 +57,14 @@ content:
     region: content
     settings:
       media_types: {  }
+    third_party_settings: {  }
+  field_release_link:
+    type: link_default
+    weight: 124
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default

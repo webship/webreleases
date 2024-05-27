@@ -65,8 +65,8 @@ third_party_settings:
             region: content
             configuration:
               id: 'field_block:node:release:field_release_link'
-              label: 'View the release'
-              label_display: visible
+              label: 'Read release notes'
+              label_display: '0'
               provider: layout_builder
               context_mapping:
                 entity: layout_builder.entity
@@ -76,7 +76,7 @@ third_party_settings:
                 label: hidden
                 settings:
                   trim_length: 100
-                  url_only: true
+                  url_only: false
                   url_plain: false
                   rel: '0'
                   target: _blank
@@ -131,4 +131,3 @@ hidden:
   created: true
   field_release_link: true
   uid: true
-  
