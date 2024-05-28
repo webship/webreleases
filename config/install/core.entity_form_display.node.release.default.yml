@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.node.release.body
-    - field.field.node.release.field_product_name
+    - field.field.node.release.field_product
     - field.field.node.release.field_release_image
     - field.field.node.release.field_release_link
     - node.type.release
@@ -41,7 +41,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_product_name:
+  field_product:
     type: entity_reference_autocomplete
     weight: 123
     region: content

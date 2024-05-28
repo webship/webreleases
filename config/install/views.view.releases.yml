@@ -144,10 +144,10 @@ display:
           exposed: false
           granularity: second
       arguments:
-        field_product_name_target_id:
-          id: field_product_name_target_id
-          table: node__field_product_name
-          field: field_product_name_target_id
+        field_product_target_id:
+          id: field_product_target_id
+          table: node__field_product
+          field: field_product_target_id
           relationship: none
           group_type: group
           admin_label: ''
@@ -268,7 +268,7 @@ display:
           id: title
           table: node_field_data
           field: title
-          relationship: field_product_name
+          relationship: field_product
           group_type: group
           admin_label: ''
           entity_type: node
@@ -308,13 +308,13 @@ display:
         relationships: false
         arguments: false
       relationships:
-        field_product_name:
-          id: field_product_name
-          table: node__field_product_name
-          field: field_product_name
+        field_product:
+          id: field_product
+          table: node__field_product
+          field: field_product
           relationship: none
           group_type: group
-          admin_label: 'field_product_name: Content'
+          admin_label: 'field_product: Content'
           plugin_id: standard
           required: true
       display_description: ''

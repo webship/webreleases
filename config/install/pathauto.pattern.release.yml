@@ -6,7 +6,7 @@ dependencies:
 id: release
 label: Release
 type: 'canonical_entities:node'
-pattern: 'products/[node:field_product_name]/releases/[node:title]'
+pattern: 'products/[node:field_product]/releases/[node:title]'
 selection_criteria:
   67cbbc54-e06b-45d1-a4bc-d2ff7e3b8f9c:
     id: 'entity_bundle:node'

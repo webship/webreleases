@@ -4,7 +4,7 @@ dependencies:
   config:
     - core.base_field_override.node.release.title
     - field.field.node.release.body
-    - field.field.node.release.field_product_name
+    - field.field.node.release.field_product
     - field.field.node.release.field_release_image
     - field.field.node.release.field_release_link
     - node.type.release
@@ -87,7 +87,7 @@ third_party_settings:
             uuid: 5c43b09c-bd81-4e05-a728-4727942bcdea
             region: content
             configuration:
-              id: 'field_block:node:release:field_product_name'
+              id: 'field_block:node:release:field_product'
               label_display: '0'
               context_mapping:
                 entity: layout_builder.entity
@@ -132,7 +132,7 @@ content:
     third_party_settings: {  }
     weight: 101
     region: content
-  field_product_name:
+  field_product:
     type: entity_reference_label
     label: above
     settings:
