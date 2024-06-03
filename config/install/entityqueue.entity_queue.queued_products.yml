@@ -3,6 +3,8 @@ status: true
 dependencies:
   module:
     - node
+_core:
+  default_config_hash: NHZ9er8BnPzWvJUSdvUxlfPQr83wSkL9V9UJTY6OWeg
 id: queued_products
 label: 'Queued Products'
 handler: simple
@@ -11,7 +13,8 @@ entity_settings:
   target_type: node
   handler: 'default:node'
   handler_settings:
-    target_bundles: null
+    target_bundles:
+      product: product
     sort:
       field: _none
       direction: ASC
