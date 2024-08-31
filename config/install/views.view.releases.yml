@@ -10,7 +10,7 @@ dependencies:
     - node
     - user
 _core:
-  default_config_hash: kvDp2tSARic7kZ3y9yHh2VP9-dqvSe0GXbLDX4vLxwE
+  default_config_hash: LJX1JDstkAtudpwJNTIJwVUNbCGn6XAUqMxWmzgcMpQ
 id: releases
 label: Releases
 module: views
@@ -91,10 +91,27 @@ display:
           separator: ', '
           field_api_classes: false
       pager:
-        type: some
+        type: full
         options:
           offset: 0
-          items_per_page: 1
+          pagination_heading_level: h4
+          items_per_page: 9
+          total_pages: null
+          id: 0
+          tags:
+            next: 'Next ›'
+            previous: '‹ Previous'
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
       exposed_form:
         type: basic
         options:
@@ -219,6 +236,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
+        - url.query_args
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
@@ -228,6 +246,11 @@ display:
     display_plugin: block
     position: 1
     display_options:
+      pager:
+        type: some
+        options:
+          offset: 0
+          items_per_page: 1
       arguments:
         title:
           id: title
@@ -270,6 +293,7 @@ display:
           transform_dash: false
           break_phrase: false
       defaults:
+        pager: false
         relationships: false
         arguments: false
       relationships:
@@ -313,6 +337,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
+        - url.query_args
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
@@ -388,6 +413,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
+        - url.query_args
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
