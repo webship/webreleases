@@ -5,7 +5,7 @@ dependencies:
     - core.base_field_override.node.release.title
     - core.entity_view_mode.node.archive
     - field.field.node.release.body
-    - field.field.node.release.field_product_name
+    - field.field.node.release.field_product
     - field.field.node.release.field_release_image
     - field.field.node.release.field_release_link
     - node.type.release
@@ -54,7 +54,7 @@ content:
     third_party_settings: {  }
     weight: 101
     region: content
-  field_product_name:
+  field_product:
     type: entity_reference_label
     label: above
     settings:
