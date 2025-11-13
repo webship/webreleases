@@ -5,6 +5,7 @@ include:
       - "/includes/include.drupalci.main.yml"
       - "/includes/include.drupalci.variables.yml"
       - "/includes/include.drupalci.workflows.yml"
+
 cspell:
   stage: validate
   image: node:18
