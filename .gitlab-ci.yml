@@ -14,11 +14,6 @@ cspell:
   script:
     - cspell "**/*.{php,module,inc,install,test,profile,theme,js,css,md,yml,txt}" --no-progress || true
   allow_failure: true
-eslint:
-  allow_failure: true
-phpcs:
-  allow_failure: true
-phpstan:
-  allow_failure: true
-phpunit:
-  allow_failure: true
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH || $CI_COMMIT_TAG'
+      when: always
