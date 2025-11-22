@@ -14,5 +14,4 @@ dependencies:
   - drupal:layout_builder
   - drupal:layout_discovery
   - manage_display:manage_display
-  - webassets:webassets
   
