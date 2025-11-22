@@ -34,12 +34,28 @@ cspell:
 
 eslint:
   allow_failure: true
+  artifacts:
+    reports:
+      codequality: gl-codequality.json
+    expire_in: 1 week
+    when: always
 
 phpcs:
   allow_failure: true
+  artifacts:
+    expire_in: 1 week
+    when: always
 
 phpstan:
   allow_failure: true
+  artifacts:
+    expire_in: 1 week
+    when: always
 
 phpunit:
   allow_failure: true
+  artifacts:
+    reports:
+      junit: junit.xml
+    expire_in: 1 week
+    when: always
