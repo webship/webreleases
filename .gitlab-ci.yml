@@ -12,18 +12,19 @@ composer:
 
 composer-lint:
   allow_failure: true
-
 cspell:
+  stage: validate
+  image: node:18
+  before_script:
+    - npm install -g cspell
+  script:
+    - cspell "**/*.{php,module,inc,install,test,profile,theme,js,css,md,yml,txt}" --no-progress || true
   allow_failure: true
-
 eslint:
   allow_failure: true
-
 phpcs:
   allow_failure: true
-
 phpstan:
   allow_failure: true
-
 phpunit:
   allow_failure: true
