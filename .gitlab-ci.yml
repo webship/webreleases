@@ -8,7 +8,7 @@ include:
 
 composer:
   variables:
-    _LENIENT_ALLOW_LIST: "select2, styleguide, webdev, webassets"
+    _LENIENT_ALLOW_LIST: "select2, styleguide, webdev, webassets, core"
 
 composer-lint:
   allow_failure: true
