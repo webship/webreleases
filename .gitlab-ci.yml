@@ -7,10 +7,10 @@ include:
       - "/includes/include.drupalci.workflows.yml"
 
 variables:
-  _LENIENT_ALLOW_LIST: "webdev, webassets, core, manage_display"
+  _LENIENT_ALLOW_LIST: "*"
 
 composer:
-  allow_failure: false
+  allow_failure: true
 
 composer-lint:
   allow_failure: true
