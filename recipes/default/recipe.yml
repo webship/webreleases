@@ -1,0 +1,18 @@
+name: Web Releases - Default
+description: A recipe to manage default installed modules, configs and permissions.
+type: install
+install:
+  - path
+  - text
+  - node
+  - user
+  - menu_ui
+  - content_moderation
+  - field_layout
+  - media_library
+  - layout_builder
+  - layout_discovery
+  - manage_display
+  - webpage:webpage
+config:
+  strict: false
