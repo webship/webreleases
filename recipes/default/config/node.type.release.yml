@@ -11,7 +11,7 @@ third_party_settings:
 name: Release
 type: release
 description: 'Add new release.'
-help: ''
+help: 'Use <em>Release</em> content to publish a release for a product.'
 new_revision: true
 preview_mode: 1
 display_submitted: true

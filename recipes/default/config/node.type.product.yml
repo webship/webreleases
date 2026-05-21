@@ -11,7 +11,7 @@ third_party_settings:
 name: Product
 type: product
 description: 'Add new product.'
-help: ''
+help: 'Use <em>Product</em> content to describe a product that has releases.'
 new_revision: true
 preview_mode: 1
 display_submitted: true

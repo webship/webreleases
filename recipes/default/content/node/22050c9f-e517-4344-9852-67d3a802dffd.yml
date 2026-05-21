@@ -1,0 +1,42 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: 22050c9f-e517-4344-9852-67d3a802dffd
+  bundle: release
+  default_langcode: en
+  depends:
+    97f0ab7b-f309-4cf0-bbd6-aa1413e6aab0: node
+default:
+  revision_uid:
+    -
+      target_id: 1
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+  title:
+    -
+      value: 'Pulsar 11.0'
+  promote:
+    -
+      value: false
+  sticky:
+    -
+      value: false
+  revision_translation_affected:
+    -
+      value: true
+  path:
+    -
+      alias: /products/pulsar/releases/pulsar-110
+      langcode: en
+  body:
+    -
+      value: 'Release notes for Pulsar 11.0.'
+      format: basic_html
+      summary: ''
+  field_product:
+    -
+      entity: 97f0ab7b-f309-4cf0-bbd6-aa1413e6aab0

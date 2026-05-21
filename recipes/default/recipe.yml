@@ -3,16 +3,23 @@ description: A recipe to manage default installed modules, configs and permissio
 type: install
 install:
   - path
+  - pathauto
   - text
+  - link
+  - image
   - node
   - user
+  - views
   - menu_ui
   - content_moderation
   - field_layout
+  - media
   - media_library
   - layout_builder
   - layout_discovery
   - manage_display
-  - webpage:webpage
+  - webpage
 config:
   strict: false
+  import:
+    webpage: '*'

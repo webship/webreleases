@@ -23,8 +23,9 @@
   },
   "require": {
     "drupal/core": "~11.3.0",
-    "drupal/webdev": "11.0.x-dev",
-    "drupal/webassets": "11.0.x-dev",
+    "drupal/webdev": "~11",
+    "drupal/webassets": "~11",
+    "drupal/webpage": "~11",
     "drupal/manage_display": "~3.0"
   }
 }
