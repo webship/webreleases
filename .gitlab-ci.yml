@@ -55,7 +55,10 @@ stylelint:
 #      `.testing-job-base`) which already has PHP, Apache, Drush, and MySQL.
 #   3. before_script installs Drupal + the module, then Node.js + yarn deps +
 #      Playwright Chromium. Test jobs only override `script:`.
-#   4. `DRUPAL_ADMIN_PASSWORD=admin` matches the password set by `drush si`.
+#   4. The site-install credentials (`webmaster` / `dD.123123ddd`) match the
+#      Webmaster fixture in cucumber.js worldParameters.users, which is what
+#      every BDD scenario logs in as via the role-based step:
+#        Given I am a logged in user with the "Webmaster" user
 # ──────────────────────────────────────────────────────────────────────────────
 .drupal-node-base:
   extends: .testing-job-base
@@ -66,12 +69,8 @@ stylelint:
     - name: $_CONFIG_DOCKERHUB_ROOT/$_TARGET_DB_TYPE-$_TARGET_DB_VERSION:$_TARGET_DB_IMAGE_TAG
       alias: database
   variables:
-    DRUPAL_ADMIN_USERNAME: "admin"
-    DRUPAL_ADMIN_PASSWORD: "admin"
     DRUPAL_TEST_BASE_URL: "http://localhost"
     LAUNCH_URL: "http://localhost"
-    # Drush command used by the releases-seeding step in the BDD suite.
-    WEBRELEASES_DRUSH: "$CI_PROJECT_DIR/vendor/bin/drush --root=$CI_PROJECT_DIR/$_WEB_ROOT"
     FORCE_COLOR: "1"
   before_script:
     # ── Web server ──────────────────────────────────────────────────────────
@@ -85,10 +84,11 @@ stylelint:
     # ── Database ────────────────────────────────────────────────────────────
     - export SIMPLETEST_DB=mysql://$MYSQL_USER:$MYSQL_PASSWORD@database/$MYSQL_DATABASE
     # ── Drupal site install ─────────────────────────────────────────────────
+    # Credentials must match cucumber.js worldParameters.users.Webmaster.
     - $CI_PROJECT_DIR/vendor/bin/drush --root=$CI_PROJECT_DIR/$_WEB_ROOT site:install standard
         --db-url=$SIMPLETEST_DB
-        --account-name=admin
-        --account-pass=admin
+        --account-name=webmaster
+        --account-pass=dD.123123ddd
         --site-name="Web Releases Test"
         -y
     # ── Webpage module compatibility ────────────────────────────────────────
