@@ -4,7 +4,7 @@ Feature: Release content type
   So that I can publish releases for that product
 
   Background:
-    Given I am logged in as admin
+    Given I am a logged in user with the "Webmaster" user
 
   Scenario: Admin can access the release add form
     When I navigate to "/node/add/release"
@@ -26,8 +26,8 @@ Feature: Release content type
      And I press "Save"
     Then I should see "has been created"
     When I navigate to "/node/add/release"
-     And I fill in "Drupal 11 Release" for "Release tag"
+     And I fill in "11.0.0" for "Release tag"
      And I select "Drupal" from the "Product" autocomplete
      And I press "Save"
     Then I should see "has been created"
-     And I should see "Drupal 11 Release"
+     And I should see "Drupal 11.0.0"

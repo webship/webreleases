@@ -1,0 +1,6 @@
+services:
+  webreleases.product_path_processor:
+    class: Drupal\webreleases\PathProcessor\WebReleasesProductPathProcessor
+    arguments: ['@path_alias.manager', '@database']
+    tags:
+      - { name: path_processor_inbound, priority: 100 }

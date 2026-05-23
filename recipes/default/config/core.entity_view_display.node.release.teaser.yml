@@ -24,6 +24,25 @@ third_party_settings:
           context_mapping: {  }
           column_widths: 50-50
         components:
+          8c122d7a-0c12-4cbf-b7b7-18c7c5897a4c:
+            uuid: 8c122d7a-0c12-4cbf-b7b7-18c7c5897a4c
+            region: first
+            configuration:
+              id: 'field_block:node:release:field_product'
+              label: 'Product'
+              label_display: '0'
+              provider: layout_builder
+              context_mapping:
+                entity: layout_builder.entity
+                view_mode: view_mode
+              formatter:
+                type: entity_reference_label
+                label: hidden
+                settings:
+                  link: true
+                third_party_settings: {  }
+            weight: -1
+            additional: {  }
           fac0a0bf-5c7d-4cd2-8947-9eab725c56d8:
             uuid: fac0a0bf-5c7d-4cd2-8947-9eab725c56d8
             region: first
@@ -112,6 +131,14 @@ content:
     third_party_settings: {  }
     weight: 101
     region: content
+  field_product:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: -50
+    region: content
   links:
     settings: {  }
     third_party_settings: {  }
@@ -128,6 +155,5 @@ content:
     region: content
 hidden:
   created: true
-  field_product: true
   field_release_image: true
   uid: true

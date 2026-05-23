@@ -1,31 +1,90 @@
 {
-  "name": "drupal/webreleases",
-  "description": "Provide product and release content type along with customized views for the products page and dedicated releases pages.",
-  "type": "drupal-module",
-  "license": "GPL-1.0-or-later",
-  "minimum-stability": "dev",
-  "authors": [
-    {
-      "name": "Webship",
-      "homepage": "http://webship.org",
-      "role": "Maintainer"
+    "name": "drupal/webreleases",
+    "description": "Provide product and release content type along with customized views for the products page and dedicated releases pages.",
+    "type": "drupal-module",
+    "license": "GPL-1.0-or-later",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Webship",
+            "homepage": "http://webship.org",
+            "role": "Maintainer"
+        }
+    ],
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/webreleases",
+        "source": "http://cgit.drupalcode.org/webreleases"
+    },
+    "repositories": {
+        "drupal": {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        }
+    },
+    "require": {
+        "drupal/webdev": "~11",
+        "drupal/webassets": "~11",
+        "drupal/webpage": "~11",
+        "drupal/manage_display": "~3.0"
+    },
+    "require-dev": {
+        "composer/installers": "^1 || ^2",
+        "drupal/core-composer-scaffold": "11.3.10",
+        "cweagans/composer-patches": "~1.0",
+        "drupal/core-recommended": "11.3.10",
+        "drupal/core-dev": "11.3.10",
+        "php-parallel-lint/php-parallel-lint": "^1.2",
+        "drush/drush": "^13.7"
+    },
+    "conflict": {
+        "phpunit/phpunit": ">=11.5.29 <11.5.31"
+    },
+    "prefer-stable": true,
+    "config": {
+        "process-timeout": 36000,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "composer/installers": true,
+            "cweagans/composer-patches": true,
+            "drupal/core-composer-scaffold": true,
+            "drupalspoons/composer-plugin": true,
+            "phpstan/extension-installer": true,
+            "symfony/runtime": true
+        }
+    },
+    "extra": {
+        "installer-paths": {
+            "web/core": [
+                "type:drupal-core"
+            ],
+            "web/libraries/{$name}": [
+                "type:drupal-library"
+            ],
+            "web/modules/contrib/{$name}": [
+                "type:drupal-module"
+            ],
+            "web/profiles/contrib/{$name}": [
+                "type:drupal-profile"
+            ],
+            "web/themes/contrib/{$name}": [
+                "type:drupal-theme"
+            ],
+            "recipes/{$name}": [
+                "type:drupal-recipe"
+            ],
+            "drush/{$name}": [
+                "type:drupal-drush"
+            ]
+        },
+        "drupal-scaffold": {
+            "locations": {
+                "web-root": "web/"
+            }
+        },
+        "drush": {
+            "services": {
+                "drush.services.yml": "^9 || ^10 || ^11"
+            }
+        }
     }
-  ],
-  "support": {
-    "issues": "https://www.drupal.org/project/issues/webreleases",
-    "source": "http://cgit.drupalcode.org/webreleases"
-  },
-  "repositories": {
-    "drupal": {
-      "type": "composer",
-      "url": "https://packages.drupal.org/8"
-    }
-  },
-  "require": {
-    "drupal/core": "~11.3.0",
-    "drupal/webdev": "~11",
-    "drupal/webassets": "~11",
-    "drupal/webpage": "~11",
-    "drupal/manage_display": "~3.0"
-  }
 }

@@ -11,6 +11,7 @@ install:
   - user
   - views
   - menu_ui
+  - menu_link_content
   - content_moderation
   - field_layout
   - media

@@ -93,11 +93,11 @@ third_party_settings:
                 entity: layout_builder.entity
               formatter:
                 type: entity_reference_label
-                label: above
+                label: hidden
                 settings:
                   link: true
                 third_party_settings: {  }
-            weight: 4
+            weight: -1
             additional: {  }
           9cd841af-83ba-4bb8-ab6b-447ece509cc1:
             uuid: 9cd841af-83ba-4bb8-ab6b-447ece509cc1
@@ -134,11 +134,11 @@ content:
     region: content
   field_product:
     type: entity_reference_label
-    label: above
+    label: hidden
     settings:
       link: true
     third_party_settings: {  }
-    weight: 103
+    weight: -50
     region: content
   field_release_image:
     type: entity_reference_entity_view

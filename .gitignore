@@ -1,3 +1,16 @@
 # Ignore node modules
 node_modules
 /*/node_modules
+
+# Claude Code session artefacts
+.claude/
+
+# gitlab-ci-local build cache + variables file
+.gitlab-ci-local/
+.gitlab-ci-local-variables.yml
+
+# Test run artefacts (videos / screenshots / reports are in their own
+# directories with their own .gitignore — this catches anything leaking
+# to the project root).
+/tests/reports/cucumber_report.html
+/tests/reports/cucumber_report.json

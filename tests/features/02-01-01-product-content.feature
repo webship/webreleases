@@ -4,7 +4,7 @@ Feature: Product content type
   So that I can describe the products that have releases
 
   Background:
-    Given I am logged in as admin
+    Given I am a logged in user with the "Webmaster" user
 
   Scenario: Admin can access the product add form
     When I navigate to "/node/add/product"

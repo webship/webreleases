@@ -4,22 +4,22 @@ Feature: Releases view page
   So that I can browse a product's releases
 
   Scenario: The releases page lists a product's releases
-    Given I am logged in as admin
+    Given I am a logged in user with the "Webmaster" user
     When I navigate to "/node/add/product"
      And I fill in "Webship" for "Title"
      And I press "Save"
     Then I should see "has been created"
     When I navigate to "/node/add/release"
-     And I fill in "Webship Edge" for "Release tag"
+     And I fill in "1.0.0" for "Release tag"
      And I select "Webship" from the "Product" autocomplete
      And I press "Save"
     Then I should see "has been created"
     When I navigate to "/products/webship/releases"
     Then I should see "Releases"
-     And I should see "Webship Edge"
+     And I should see "Webship 1.0.0"
 
   Scenario: The releases page is reachable for a product
-    Given I am logged in as admin
+    Given I am a logged in user with the "Webmaster" user
     When I navigate to "/node/add/product"
      And I fill in "Hawk" for "Title"
      And I press "Save"
