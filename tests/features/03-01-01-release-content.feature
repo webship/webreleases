@@ -30,4 +30,5 @@ Feature: Release content type
      And I select "Drupal" from the "Product" autocomplete
      And I press "Save"
     Then I should see "has been created"
-     And I should see "Drupal 11.0.0"
+     And "h1" should contain text "11.0.0"
+     And I should see "Drupal"

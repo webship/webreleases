@@ -2,16 +2,16 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.full
+    - core.base_field_override.node.release.title
+    - core.entity_view_mode.node.product_release
     - field.field.node.release.body
     - field.field.node.release.field_product
     - field.field.node.release.field_release_image
-    - field.field.node.release.field_release_link
     - node.type.release
   module:
     - display_builder
-    - link
     - manage_display
+    - smart_trim
     - text
 third_party_settings:
   display_builder:
@@ -20,17 +20,18 @@ third_party_settings:
       -
         source_id: entity_field
         source:
-          derivable_context: 'field:node:release:field_product'
-          'field:node:release:field_product':
+          derivable_context: 'field:node:release:title'
+          'field:node:release:title':
             value:
               sources:
                 -
-                  source_id: 'field_formatter:node:release:field_product'
+                  source_id: 'field_formatter:node:release:title'
                   source:
-                    type: entity_reference_label
+                    type: title
                     label: hidden
                     settings:
-                      link: true
+                      link_to_entity: true
+                      tag: h3
                     third_party_settings: {  }
                     weight: 0
       -
@@ -59,23 +60,7 @@ third_party_settings:
                         granularity: 2
                         refresh: 60
                     third_party_settings: {  }
-                    weight: 2
-      -
-        source_id: entity_field
-        source:
-          derivable_context: 'field:node:release:field_release_image'
-          'field:node:release:field_release_image':
-            value:
-              sources:
-                -
-                  source_id: 'field_formatter:node:release:field_release_image'
-                  source:
-                    type: entity_reference_entity_view
-                    label: hidden
-                    settings:
-                      view_mode: standard
-                    third_party_settings: {  }
-                    weight: 5
+                    weight: 1
       -
         source_id: entity_field
         source:
@@ -86,42 +71,56 @@ third_party_settings:
                 -
                   source_id: 'field_formatter:node:release:body'
                   source:
-                    type: text_default
-                    label: hidden
-                    settings: {  }
-                    third_party_settings: {  }
-                    weight: 6
-      -
-        source_id: entity_field
-        source:
-          derivable_context: 'field:node:release:field_release_link'
-          'field:node:release:field_release_link':
-            value:
-              sources:
-                -
-                  source_id: 'field_formatter:node:release:field_release_link'
-                  source:
-                    type: link
+                    type: smart_trim
                     label: hidden
                     settings:
-                      trim_length: 30
-                      url_only: false
-                      url_plain: false
-                      rel: '0'
-                      target: _blank
+                      trim_length: 300
+                      trim_type: chars
+                      trim_suffix: ''
+                      wrap_output: false
+                      wrap_class: trimmed
+                      more:
+                        display_link: false
+                        target_blank: false
+                        link_trim_only: false
+                        class: more-link
+                        text: More
+                        aria_label: 'Read more about [node:title]'
+                      summary_handler: full
+                      trim_options:
+                        text: true
+                        trim_zero: false
+                        replace_tokens: false
                     third_party_settings: {  }
-                    weight: 7
-id: node.release.full
+                    weight: 2
+id: node.release.product_release
 targetEntityType: node
 bundle: release
-mode: full
+mode: product_release
 content:
   body:
-    type: text_default
+    type: smart_trim
     label: hidden
-    settings: {  }
+    settings:
+      trim_length: 300
+      trim_type: chars
+      trim_suffix: ''
+      wrap_output: false
+      wrap_class: trimmed
+      more:
+        display_link: false
+        target_blank: false
+        link_trim_only: false
+        class: more-link
+        text: More
+        aria_label: 'Read more about [node:title]'
+      summary_handler: full
+      trim_options:
+        text: true
+        trim_zero: false
+        replace_tokens: false
     third_party_settings: {  }
-    weight: 101
+    weight: 2
     region: content
   created:
     type: timestamp
@@ -140,50 +139,20 @@ content:
         granularity: 2
         refresh: 60
     third_party_settings: {  }
-    weight: -48
-    region: content
-  field_product:
-    type: entity_reference_label
-    label: hidden
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: -50
-    region: content
-  field_release_image:
-    type: entity_reference_entity_view
-    label: above
-    settings:
-      view_mode: default
-      link: false
-    third_party_settings: {  }
-    weight: 102
-    region: content
-  field_release_link:
-    type: link
-    label: hidden
-    settings:
-      trim_length: 30
-      url_only: false
-      url_plain: false
-      rel: '0'
-      target: _blank
-    third_party_settings: {  }
-    weight: 104
-    region: content
-  links:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 100
+    weight: 1
     region: content
   title:
     type: title
     label: hidden
     settings:
       link_to_entity: true
-      tag: h2
+      tag: h3
     third_party_settings: {  }
-    weight: -49
+    weight: 0
     region: content
 hidden:
+  field_product: true
+  field_release_image: true
+  field_release_link: true
+  links: true
   uid: true

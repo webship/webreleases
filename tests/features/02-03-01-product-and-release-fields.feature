@@ -17,14 +17,26 @@ Feature: Product and release fields on the Web Releases pages
      And I should see "2.0.0"
      And I should see "2.1.0"
      And I should see "June 1, 2026"
+     And ".node--type-release a[href$='/products/andromeda']" should have a count of 0
 
-  Scenario: A release page shows its version and its release date
+  Scenario: A release page shows its version once and its release date
     Given the product "Cassiopeia" with an image has the following releases:
       | 3.0.0 | 2026-03-15 |
     When I navigate to "/products/cassiopeia/releases/300"
-    Then I should see "3.0.0"
+    Then "h1" should contain text "3.0.0"
+     And ".node--type-release h2" should have a count of 0
      And I should see "March 15, 2026"
      And I should see "Cassiopeia"
+
+  Scenario: The releases page of a product lists its releases and the release breadcrumb links to it
+    Given the product "Pegasus" with an image has the following releases:
+      | 5.0.0 | 2026-04-01 |
+      | 5.1.0 | 2026-08-01 |
+    When I navigate to "/products/pegasus/releases"
+    Then I should see "5.0.0"
+     And I should see "5.1.0"
+    When I navigate to "/products/pegasus/releases/510"
+    Then "a[href$='/products/pegasus/releases']" should be visible
 
   Scenario: The products listing shows the product image
     Given the product "Lyra" with an image has the following releases:

@@ -4,3 +4,5 @@ services:
     arguments: ['@path_alias.manager', '@database']
     tags:
       - { name: path_processor_inbound, priority: 100 }
+      # After the core alias processor (300).
+      - { name: path_processor_outbound, priority: 200 }

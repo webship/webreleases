@@ -316,8 +316,15 @@ display:
             offset: false
             offset_label: Offset
           quantity: 9
+      # On the product page, the releases do not repeat the product.
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: product_release
       defaults:
         pager: false
+        row: false
       display_description: ''
       display_extenders:
         metatag_display_extender:

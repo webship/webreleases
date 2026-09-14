@@ -22,6 +22,9 @@ install:
   - display_builder
   - display_builder_entity_view
   - display_builder_ui
+  # Last: the product path processor serves the releases page of a product at
+  # its alias, /products/<product>/releases.
+  - webreleases
 config:
   strict: false
   import:

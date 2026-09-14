@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.product_release
+label: 'Product release'
+description: 'A release in the release list of its product page: version, date and notes, without the product.'
+targetEntityType: node
+cache: true

@@ -6,6 +6,8 @@ namespace Drupal\webreleases\PathProcessor;
 
 use Drupal\Core\Database\Connection;
 use Drupal\Core\PathProcessor\InboundPathProcessorInterface;
+use Drupal\Core\PathProcessor\OutboundPathProcessorInterface;
+use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\path_alias\AliasManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -28,8 +30,11 @@ use Symfony\Component\HttpFoundation\Request;
  *
  * If no product matches the request passes through unchanged and Drupal
  * returns the view's "no result" page.
+ *
+ * Links to /products/<nid>/releases, like the release breadcrumb, are written
+ * with the product alias: /products/<product alias>/releases.
  */
-final class WebReleasesProductPathProcessor implements InboundPathProcessorInterface {
+final class WebReleasesProductPathProcessor implements InboundPathProcessorInterface, OutboundPathProcessorInterface {
 
   public function __construct(
     private readonly AliasManagerInterface $aliasManager,
@@ -69,6 +74,22 @@ final class WebReleasesProductPathProcessor implements InboundPathProcessorInter
       ->fetchField();
     if ($nid) {
       return '/products/' . $nid . '/releases';
+    }
+    return $path;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function processOutbound($path, &$options = [], ?Request $request = NULL, ?BubbleableMetadata $bubbleable_metadata = NULL): string {
+    if (!empty($options['alias']) || !preg_match('#^/products/(\d+)/releases$#', $path, $match)) {
+      return $path;
+    }
+    $langcode = isset($options['language']) ? $options['language']->getId() : NULL;
+    $alias = $this->aliasManager->getAliasByPath('/node/' . $match[1], $langcode);
+    // Only a product alias under /products gives a releases page path.
+    if (preg_match('#^/products/[^/]+$#', $alias)) {
+      return $alias . '/releases';
     }
     return $path;
   }

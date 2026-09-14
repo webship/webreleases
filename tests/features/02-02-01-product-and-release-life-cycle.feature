@@ -25,7 +25,8 @@ Feature: Product and release life cycle — create, edit, and view
      And I select "Polaris" from the "Product" autocomplete
      And I press "Save"
     Then I should see "has been created"
-     And I should see "Polaris 1.0.0"
+     And "h1" should contain text "1.0.0"
+     And I should see "Polaris"
     When I navigate to "/products/polaris/releases"
     Then I should see "Releases"
      And I should see "Polaris 1.0.0"
