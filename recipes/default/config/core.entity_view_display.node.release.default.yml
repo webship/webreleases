@@ -9,117 +9,103 @@ dependencies:
     - field.field.node.release.field_release_link
     - node.type.release
   module:
-    - layout_builder
-    - layout_discovery
+    - display_builder
     - link
     - manage_display
     - text
 third_party_settings:
-  layout_builder:
-    enabled: true
-    allow_custom: false
-    sections:
+  display_builder:
+    profile: default
+    sources:
       -
-        layout_id: layout_onecol
-        layout_settings:
-          label: ''
-        components:
-          7d1b97be-ba34-4804-a732-4a5f548673ba:
-            uuid: 7d1b97be-ba34-4804-a732-4a5f548673ba
-            region: content
-            configuration:
-              id: 'field_block:node:release:title'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: title
-                label: hidden
-                settings:
-                  link_to_entity: true
-                  tag: h2
-                third_party_settings: {  }
-            weight: 0
-            additional: {  }
-          62ce3933-0a5f-4dcf-951f-afeb3f9f10ee:
-            uuid: 62ce3933-0a5f-4dcf-951f-afeb3f9f10ee
-            region: content
-            configuration:
-              id: 'extra_field_block:node:release:links'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-            weight: 1
-            additional: {  }
-          6862c11b-49d6-4fb3-b297-6ac17e35dfae:
-            uuid: 6862c11b-49d6-4fb3-b297-6ac17e35dfae
-            region: content
-            configuration:
-              id: 'field_block:node:release:body'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: text_default
-                label: hidden
-                settings: {  }
-                third_party_settings: {  }
-            weight: 2
-            additional: {  }
-          109c4f08-09c7-48bf-838d-434a41b48dcd:
-            uuid: 109c4f08-09c7-48bf-838d-434a41b48dcd
-            region: content
-            configuration:
-              id: 'field_block:node:release:field_release_image'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: entity_reference_entity_view
-                label: above
-                settings:
-                  view_mode: default
-                  link: false
-                third_party_settings: {  }
-            weight: 3
-            additional: {  }
-          5c43b09c-bd81-4e05-a728-4727942bcdea:
-            uuid: 5c43b09c-bd81-4e05-a728-4727942bcdea
-            region: content
-            configuration:
-              id: 'field_block:node:release:field_product'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: entity_reference_label
-                label: hidden
-                settings:
-                  link: true
-                third_party_settings: {  }
-            weight: -1
-            additional: {  }
-          9cd841af-83ba-4bb8-ab6b-447ece509cc1:
-            uuid: 9cd841af-83ba-4bb8-ab6b-447ece509cc1
-            region: content
-            configuration:
-              id: 'field_block:node:release:field_release_link'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: link
-                label: above
-                settings:
-                  trim_length: 80
-                  url_only: false
-                  url_plain: false
-                  rel: ''
-                  target: ''
-                third_party_settings: {  }
-            weight: 5
-            additional: {  }
-        third_party_settings: {  }
+        source_id: entity_field
+        source:
+          derivable_context: 'field:node:release:field_product'
+          'field:node:release:field_product':
+            value:
+              sources:
+                -
+                  source_id: 'field_formatter:node:release:field_product'
+                  source:
+                    type: entity_reference_label
+                    label: hidden
+                    settings:
+                      link: true
+                    third_party_settings: {  }
+                    weight: -1
+      -
+        source_id: entity_field
+        source:
+          derivable_context: 'field:node:release:title'
+          'field:node:release:title':
+            value:
+              sources:
+                -
+                  source_id: 'field_formatter:node:release:title'
+                  source:
+                    type: title
+                    label: hidden
+                    settings:
+                      link_to_entity: true
+                      tag: h2
+                    third_party_settings: {  }
+                    weight: 0
+      -
+        source_id: extra_field
+        source:
+          field: links
+      -
+        source_id: entity_field
+        source:
+          derivable_context: 'field:node:release:body'
+          'field:node:release:body':
+            value:
+              sources:
+                -
+                  source_id: 'field_formatter:node:release:body'
+                  source:
+                    type: text_default
+                    label: hidden
+                    settings: {  }
+                    third_party_settings: {  }
+                    weight: 2
+      -
+        source_id: entity_field
+        source:
+          derivable_context: 'field:node:release:field_release_image'
+          'field:node:release:field_release_image':
+            value:
+              sources:
+                -
+                  source_id: 'field_formatter:node:release:field_release_image'
+                  source:
+                    type: entity_reference_entity_view
+                    label: above
+                    settings:
+                      view_mode: default
+                      link: false
+                    third_party_settings: {  }
+                    weight: 3
+      -
+        source_id: entity_field
+        source:
+          derivable_context: 'field:node:release:field_release_link'
+          'field:node:release:field_release_link':
+            value:
+              sources:
+                -
+                  source_id: 'field_formatter:node:release:field_release_link'
+                  source:
+                    type: link
+                    label: above
+                    settings:
+                      trim_length: 80
+                      url_only: false
+                      url_plain: false
+                      rel: ''
+                      target: ''
+                    third_party_settings: {  }
+                    weight: 5
 id: node.release.default
 targetEntityType: node
 bundle: release

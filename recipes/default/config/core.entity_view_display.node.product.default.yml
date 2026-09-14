@@ -6,79 +6,66 @@ dependencies:
     - field.field.node.product.field_image
     - node.type.product
   module:
-    - layout_builder
+    - display_builder
     - manage_display
     - text
 third_party_settings:
-  layout_builder:
-    enabled: true
-    allow_custom: false
-    sections:
+  display_builder:
+    profile: default
+    sources:
       -
-        layout_id: layout_onecol
-        layout_settings:
-          label: ''
-        components:
-          26a69af7-bbbd-4078-98b8-e45faa160627:
-            uuid: 26a69af7-bbbd-4078-98b8-e45faa160627
-            region: content
-            configuration:
-              id: 'field_block:node:product:title'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: title
-                label: hidden
-                settings:
-                  link_to_entity: true
-                  tag: h2
-                third_party_settings: {  }
-            weight: 0
-            additional: {  }
-          a8778be0-96c4-478a-aeee-200d3e70fea3:
-            uuid: a8778be0-96c4-478a-aeee-200d3e70fea3
-            region: content
-            configuration:
-              id: 'extra_field_block:node:product:links'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-            weight: 1
-            additional: {  }
-          a4e663b4-7d8d-4182-b532-99fc1a0921d5:
-            uuid: a4e663b4-7d8d-4182-b532-99fc1a0921d5
-            region: content
-            configuration:
-              id: 'field_block:node:product:body'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: text_default
-                label: hidden
-                settings: {  }
-                third_party_settings: {  }
-            weight: 2
-            additional: {  }
-          bad30b7d-d10c-424f-909e-1cfe90e0f409:
-            uuid: bad30b7d-d10c-424f-909e-1cfe90e0f409
-            region: content
-            configuration:
-              id: 'field_block:node:product:field_image'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: entity_reference_entity_view
-                label: above
-                settings:
-                  view_mode: default
-                  link: false
-                third_party_settings: {  }
-            weight: 3
-            additional: {  }
-        third_party_settings: {  }
+        source_id: entity_field
+        source:
+          derivable_context: 'field:node:product:title'
+          'field:node:product:title':
+            value:
+              sources:
+                -
+                  source_id: 'field_formatter:node:product:title'
+                  source:
+                    type: title
+                    label: hidden
+                    settings:
+                      link_to_entity: true
+                      tag: h2
+                    third_party_settings: {  }
+                    weight: 0
+      -
+        source_id: extra_field
+        source:
+          field: links
+      -
+        source_id: entity_field
+        source:
+          derivable_context: 'field:node:product:body'
+          'field:node:product:body':
+            value:
+              sources:
+                -
+                  source_id: 'field_formatter:node:product:body'
+                  source:
+                    type: text_default
+                    label: hidden
+                    settings: {  }
+                    third_party_settings: {  }
+                    weight: 2
+      -
+        source_id: entity_field
+        source:
+          derivable_context: 'field:node:product:field_image'
+          'field:node:product:field_image':
+            value:
+              sources:
+                -
+                  source_id: 'field_formatter:node:product:field_image'
+                  source:
+                    type: entity_reference_entity_view
+                    label: above
+                    settings:
+                      view_mode: default
+                      link: false
+                    third_party_settings: {  }
+                    weight: 3
 id: node.product.default
 targetEntityType: node
 bundle: product

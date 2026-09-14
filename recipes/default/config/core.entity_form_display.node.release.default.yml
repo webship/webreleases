@@ -9,17 +9,10 @@ dependencies:
     - node.type.release
   module:
     - content_moderation
-    - field_layout
-    - layout_discovery
     - link
     - media_library
     - path
     - text
-third_party_settings:
-  field_layout:
-    id: layout_onecol
-    settings:
-      label: ''
 id: node.release.default
 targetEntityType: node
 bundle: release

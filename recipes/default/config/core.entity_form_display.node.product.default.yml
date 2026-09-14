@@ -7,16 +7,9 @@ dependencies:
     - node.type.product
   module:
     - content_moderation
-    - field_layout
-    - layout_discovery
     - media_library
     - path
     - text
-third_party_settings:
-  field_layout:
-    id: layout_onecol
-    settings:
-      label: ''
 id: node.product.default
 targetEntityType: node
 bundle: product

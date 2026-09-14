@@ -9,120 +9,98 @@ dependencies:
     - field.field.node.release.field_release_link
     - node.type.release
   module:
-    - layout_builder
-    - layout_discovery
+    - display_builder
+    - link
     - manage_display
     - text
 third_party_settings:
-  layout_builder:
-    enabled: true
-    allow_custom: false
-    sections:
+  display_builder:
+    profile: default
+    sources:
       -
-        layout_id: layout_onecol
-        layout_settings:
-          label: ''
-        components:
-          2fe445af-9c0b-472f-bdd2-061e298ba062:
-            uuid: 2fe445af-9c0b-472f-bdd2-061e298ba062
-            region: content
-            configuration:
-              id: 'field_block:node:release:field_product'
-              label: 'Product'
-              label_display: '0'
-              provider: layout_builder
-              context_mapping:
-                entity: layout_builder.entity
-                view_mode: view_mode
-              formatter:
-                type: entity_reference_label
-                label: hidden
-                settings:
-                  link: true
-                third_party_settings: {  }
-            weight: 0
-            additional: {  }
-          be13b085-aecf-4569-b1de-3335ef4f6c8b:
-            uuid: be13b085-aecf-4569-b1de-3335ef4f6c8b
-            region: content
-            configuration:
-              id: 'field_block:node:release:title'
-              label: 'Release tag'
-              label_display: '0'
-              provider: layout_builder
-              context_mapping:
-                entity: layout_builder.entity
-                view_mode: view_mode
-              formatter:
-                type: title
-                label: hidden
-                settings:
-                  link_to_entity: false
-                  tag: h2
-                third_party_settings: {  }
-            weight: 1
-            additional: {  }
-          2029d108-b50c-4eba-8d6b-12bf313f2bd7:
-            uuid: 2029d108-b50c-4eba-8d6b-12bf313f2bd7
-            region: content
-            configuration:
-              id: 'field_block:node:release:field_release_image'
-              label: 'Release Image'
-              label_display: '0'
-              provider: layout_builder
-              context_mapping:
-                entity: layout_builder.entity
-                view_mode: view_mode
-              formatter:
-                type: entity_reference_entity_view
-                label: hidden
-                settings:
-                  view_mode: standard
-                third_party_settings: {  }
-            weight: 5
-            additional: {  }
-          597ea68d-b996-419a-9eda-c263473b009c:
-            uuid: 597ea68d-b996-419a-9eda-c263473b009c
-            region: content
-            configuration:
-              id: 'field_block:node:release:body'
-              label: 'Release notes'
-              label_display: '0'
-              provider: layout_builder
-              context_mapping:
-                entity: layout_builder.entity
-                view_mode: view_mode
-              formatter:
-                type: text_default
-                label: hidden
-                settings: {  }
-                third_party_settings: {  }
-            weight: 6
-            additional: {  }
-          b882eda7-6b78-45ce-9888-afa9f02f9216:
-            uuid: b882eda7-6b78-45ce-9888-afa9f02f9216
-            region: content
-            configuration:
-              id: 'field_block:node:release:field_release_link'
-              label: 'View the release'
-              label_display: visible
-              provider: layout_builder
-              context_mapping:
-                entity: layout_builder.entity
-                view_mode: view_mode
-              formatter:
-                type: link
-                label: hidden
-                settings:
-                  trim_length: 100
-                  url_only: true
-                  url_plain: false
-                  rel: '0'
-                  target: _blank
-                third_party_settings: {  }
-            weight: 7
-            additional: {  }
-        third_party_settings: {  }
+        source_id: entity_field
+        source:
+          derivable_context: 'field:node:release:field_product'
+          'field:node:release:field_product':
+            value:
+              sources:
+                -
+                  source_id: 'field_formatter:node:release:field_product'
+                  source:
+                    type: entity_reference_label
+                    label: hidden
+                    settings:
+                      link: true
+                    third_party_settings: {  }
+                    weight: 0
+      -
+        source_id: entity_field
+        source:
+          derivable_context: 'field:node:release:title'
+          'field:node:release:title':
+            value:
+              sources:
+                -
+                  source_id: 'field_formatter:node:release:title'
+                  source:
+                    type: title
+                    label: hidden
+                    settings:
+                      link_to_entity: false
+                      tag: h2
+                    third_party_settings: {  }
+                    weight: 1
+      -
+        source_id: entity_field
+        source:
+          derivable_context: 'field:node:release:field_release_image'
+          'field:node:release:field_release_image':
+            value:
+              sources:
+                -
+                  source_id: 'field_formatter:node:release:field_release_image'
+                  source:
+                    type: entity_reference_entity_view
+                    label: hidden
+                    settings:
+                      view_mode: standard
+                    third_party_settings: {  }
+                    weight: 5
+      -
+        source_id: entity_field
+        source:
+          derivable_context: 'field:node:release:body'
+          'field:node:release:body':
+            value:
+              sources:
+                -
+                  source_id: 'field_formatter:node:release:body'
+                  source:
+                    type: text_default
+                    label: hidden
+                    settings: {  }
+                    third_party_settings: {  }
+                    weight: 6
+      -
+        source_id: entity_field
+        source:
+          derivable_context: 'field:node:release:field_release_link'
+          'field:node:release:field_release_link':
+            value:
+              sources:
+                -
+                  source_id: 'field_formatter:node:release:field_release_link'
+                  source:
+                    type: link
+                    label: hidden
+                    settings:
+                      trim_length: 100
+                      url_only: true
+                      url_plain: false
+                      rel: '0'
+                      target: _blank
+                    third_party_settings: {  }
+                    weight: 7
 id: node.release.full
 targetEntityType: node
 bundle: release

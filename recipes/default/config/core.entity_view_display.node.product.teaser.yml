@@ -7,104 +7,79 @@ dependencies:
     - field.field.node.product.field_image
     - node.type.product
   module:
-    - layout_builder
-    - layout_discovery
+    - display_builder
     - manage_display
+    - smart_trim
     - text
 third_party_settings:
-  layout_builder:
-    enabled: true
-    allow_custom: false
-    sections:
+  display_builder:
+    profile: default
+    sources:
       -
-        layout_id: layout_twocol_section
-        layout_settings:
-          label: ''
-          context_mapping: {  }
-          column_widths: 25-75
-        components:
-          32280584-9f55-4fac-bfe9-b2ea7c026c3b:
-            uuid: 32280584-9f55-4fac-bfe9-b2ea7c026c3b
-            region: first
-            configuration:
-              id: 'field_block:node:product:field_image'
-              label: Image
-              label_display: '0'
-              provider: layout_builder
-              context_mapping:
-                entity: layout_builder.entity
-                view_mode: view_mode
-              formatter:
-                type: entity_reference_entity_view
-                label: hidden
-                settings:
-                  view_mode: square
-                third_party_settings: {  }
-            weight: 0
-            additional: {  }
-          122c2986-dfc1-4a1a-bf4a-7a7cfe4b0901:
-            uuid: 122c2986-dfc1-4a1a-bf4a-7a7cfe4b0901
-            region: second
-            configuration:
-              id: 'field_block:node:product:title'
-              label: Title
-              label_display: '0'
-              provider: layout_builder
-              context_mapping:
-                entity: layout_builder.entity
-                view_mode: view_mode
-              formatter:
-                type: title
-                label: hidden
-                settings:
-                  link_to_entity: true
-                  tag: h3
-                third_party_settings: {  }
-            weight: 0
-            additional: {  }
-        third_party_settings: {  }
+        source_id: entity_field
+        source:
+          derivable_context: 'field:node:product:field_image'
+          'field:node:product:field_image':
+            value:
+              sources:
+                -
+                  source_id: 'field_formatter:node:product:field_image'
+                  source:
+                    type: entity_reference_entity_view
+                    label: hidden
+                    settings:
+                      view_mode: square
+                    third_party_settings: {  }
+                    weight: 0
       -
-        layout_id: layout_onecol
-        layout_settings:
-          label: ''
-          context_mapping: {  }
-        components:
-          91aa941f-be70-4ec0-97e4-e0f35898285e:
-            uuid: 91aa941f-be70-4ec0-97e4-e0f35898285e
-            region: content
-            configuration:
-              id: 'field_block:node:product:body'
-              label: Body
-              label_display: '0'
-              provider: layout_builder
-              context_mapping:
-                entity: layout_builder.entity
-                view_mode: view_mode
-              formatter:
-                type: smart_trim
-                label: hidden
-                settings:
-                  trim_length: 300
-                  trim_type: chars
-                  trim_suffix: ''
-                  wrap_output: false
-                  wrap_class: trimmed
-                  more:
-                    display_link: false
-                    target_blank: false
-                    link_trim_only: false
-                    class: more-link
-                    text: More
-                    aria_label: 'Read more about [node:title]'
-                  summary_handler: full
-                  trim_options:
-                    text: true
-                    trim_zero: false
-                    replace_tokens: false
-                third_party_settings: {  }
-            weight: 0
-            additional: {  }
-        third_party_settings: {  }
+        source_id: entity_field
+        source:
+          derivable_context: 'field:node:product:title'
+          'field:node:product:title':
+            value:
+              sources:
+                -
+                  source_id: 'field_formatter:node:product:title'
+                  source:
+                    type: title
+                    label: hidden
+                    settings:
+                      link_to_entity: true
+                      tag: h3
+                    third_party_settings: {  }
+                    weight: 1
+      -
+        source_id: entity_field
+        source:
+          derivable_context: 'field:node:product:body'
+          'field:node:product:body':
+            value:
+              sources:
+                -
+                  source_id: 'field_formatter:node:product:body'
+                  source:
+                    type: smart_trim
+                    label: hidden
+                    settings:
+                      trim_length: 300
+                      trim_type: chars
+                      trim_suffix: ''
+                      wrap_output: false
+                      wrap_class: trimmed
+                      more:
+                        display_link: false
+                        target_blank: false
+                        link_trim_only: false
+                        class: more-link
+                        text: More
+                        aria_label: 'Read more about [node:title]'
+                      summary_handler: full
+                      trim_options:
+                        text: true
+                        trim_zero: false
+                        replace_tokens: false
+                    third_party_settings: {  }
+                    weight: 2
 id: node.product.teaser
 targetEntityType: node
 bundle: product

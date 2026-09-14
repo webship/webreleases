@@ -10,38 +10,30 @@ dependencies:
     - field.field.node.release.field_release_link
     - node.type.release
   module:
-    - layout_builder
-    - layout_discovery
+    - display_builder
     - manage_display
     - text
 third_party_settings:
-  layout_builder:
-    enabled: true
-    allow_custom: false
-    sections:
+  display_builder:
+    profile: default
+    sources:
       -
-        layout_id: layout_onecol
-        layout_settings:
-          label: ''
-        components:
-          c51a967d-408f-4b1c-84c2-970a5b7f7fb3:
-            uuid: c51a967d-408f-4b1c-84c2-970a5b7f7fb3
-            region: content
-            configuration:
-              id: 'field_block:node:release:title'
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              formatter:
-                type: title
-                label: hidden
-                settings:
-                  link_to_entity: true
-                  tag: h2
-                third_party_settings: {  }
-            weight: 0
-            additional: {  }
-        third_party_settings: {  }
+        source_id: entity_field
+        source:
+          derivable_context: 'field:node:release:title'
+          'field:node:release:title':
+            value:
+              sources:
+                -
+                  source_id: 'field_formatter:node:release:title'
+                  source:
+                    type: title
+                    label: hidden
+                    settings:
+                      link_to_entity: true
+                      tag: h2
+                    third_party_settings: {  }
+                    weight: 0
 id: node.release.archive
 targetEntityType: node
 bundle: release

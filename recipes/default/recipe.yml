@@ -1,5 +1,5 @@
-name: Web Releases - Default
-description: A recipe to manage default installed modules, configs and permissions.
+name: 'Web Releases - Default'
+description: 'A recipe to manage default installed modules, configs and permissions.'
 type: install
 install:
   - path
@@ -13,14 +13,18 @@ install:
   - menu_ui
   - menu_link_content
   - content_moderation
-  - field_layout
   - media
   - media_library
-  - layout_builder
-  - layout_discovery
+  - webassets
   - manage_display
+  - smart_trim
   - webpage
+  - display_builder
+  - display_builder_entity_view
+  - display_builder_ui
 config:
   strict: false
   import:
     webpage: '*'
+    display_builder:
+      - display_builder.profile.default

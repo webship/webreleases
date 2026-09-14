@@ -22,14 +22,16 @@
         }
     },
     "require": {
-        "drupal/webdev": "~11",
-        "drupal/webassets": "~11",
-        "drupal/webpage": "~11",
-        "drupal/manage_display": "~3.0"
+        "drupal/core": "^11.4 || ^12",
+        "drupal/webdev": "~12.0@dev",
+        "drupal/webassets": "~12.0@dev",
+        "drupal/webpage": "~12.0@dev",
+        "drupal/manage_display": "~3.0",
+        "drupal/display_builder": "^1.0@beta"
     },
     "require-dev": {
         "composer/installers": "^1 || ^2",
-        "drupal/core-composer-scaffold": "~11.4.0",
+        "drupal/core-composer-scaffold": "^11.4 || ^12",
         "cweagans/composer-patches": "~1.0",
         "drupal/core-recommended": "~11.4.0",
         "drupal/core-dev": "~11.4.0",
