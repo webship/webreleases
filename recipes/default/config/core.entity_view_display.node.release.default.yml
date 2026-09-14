@@ -99,7 +99,7 @@ third_party_settings:
                     type: link
                     label: above
                     settings:
-                      trim_length: 80
+                      trim_length: 30
                       url_only: false
                       url_plain: false
                       rel: ''
@@ -139,7 +139,7 @@ content:
     type: link
     label: above
     settings:
-      trim_length: 80
+      trim_length: 30
       url_only: false
       url_plain: false
       rel: ''

@@ -6,11 +6,13 @@ dependencies:
     - field.field.node.product.body
     - field.field.node.product.field_image
     - node.type.product
+    - views.view.releases
   module:
     - display_builder
     - manage_display
     - media
     - text
+    - views
 third_party_settings:
   display_builder:
     profile: default
@@ -29,9 +31,9 @@ third_party_settings:
                     label: hidden
                     settings:
                       image_link: ''
-                      image_style: medium
+                      image_style: wide
                       image_loading:
-                        attribute: lazy
+                        attribute: eager
                     third_party_settings: {  }
                     weight: 0
       -
@@ -49,6 +51,21 @@ third_party_settings:
                     settings: {  }
                     third_party_settings: {  }
                     weight: 1
+      -
+        source_id: block
+        source:
+          plugin_id: 'views_block:releases-releases_block'
+          'views_block:releases-releases_block':
+            id: 'views_block:releases-releases_block'
+            label: Releases
+            label_display: visible
+            provider: views
+            views_label: Releases
+            items_per_page: none
+      -
+        source_id: extra_field
+        source:
+          field: links
 id: node.product.full
 targetEntityType: node
 bundle: product

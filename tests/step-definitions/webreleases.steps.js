@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path');
 const { Given, When, Then } = require('@cucumber/cucumber');
 const { friendly } = require('webship-js/tests/step-definitions/webship');
 
@@ -126,6 +127,111 @@ async function createReleaseViaUi(page, baseUrl, releaseTitle, productTitle) {
   await page.locator('input[value="Save"]').click();
   await page.waitForLoadState('networkidle');
 }
+
+/**
+ * Upload an image media item through the Drupal "Add Image" media form.
+ *
+ * The media name comes from the uploaded file name.
+ *
+ * @param {object} page    Playwright page.
+ * @param {string} baseUrl launchUrl.
+ * @param {string} alt     Alternative text for the image.
+ */
+async function createImageMediaViaUi(page, baseUrl, alt) {
+  await page.goto(`${baseUrl}/media/add/image`);
+  await page
+    .locator('input[type="file"][name="files[field_media_image_0]"]')
+    .setInputFiles(path.resolve(__dirname, '../files/nasa-pia17172.jpg'));
+  const altField = page.locator('input[name="field_media_image[0][alt]"]');
+  await altField.waitFor({ state: 'visible', timeout: 20000 });
+  await altField.fill(alt);
+  await page.locator('#edit-submit').click();
+  await page.waitForLoadState('networkidle');
+}
+
+/**
+ * Create a product with an image through the "Add Product" form, picking
+ * the newest image from the media library widget.
+ *
+ * @param {object} page    Playwright page.
+ * @param {string} baseUrl launchUrl.
+ * @param {string} title   Product title to create.
+ */
+async function createProductWithImageViaUi(page, baseUrl, title) {
+  await page.goto(`${baseUrl}/node/add/product`);
+  await page.locator('#edit-title-0-value').fill(title);
+  await page.locator('input[name="field_image-media-library-open-button"]').click();
+  const dialog = page.locator('.ui-dialog');
+  // The media library lists the newest media first.
+  const item = dialog.locator('.js-media-library-item').first();
+  await item.waitFor({ state: 'visible', timeout: 20000 });
+  await item.locator('input[type="checkbox"]').check();
+  await dialog.locator('.ui-dialog-buttonpane button').filter({ hasText: 'Insert selected' }).click();
+  await page
+    .locator('[data-drupal-selector="edit-field-image-selection-0-remove-button"]')
+    .waitFor({ state: 'visible', timeout: 20000 });
+  await page.locator('#edit-submit').click();
+  await page.waitForLoadState('networkidle');
+}
+
+/**
+ * Seed a product with an image and a list of releases with release dates.
+ *
+ * Each table row is a release tag and its release date (YYYY-MM-DD), which
+ * is saved as the release "Authored on" date. The image is uploaded to the
+ * media library first and picked on the product form.
+ *
+ * Caller must be logged in as admin first.
+ *
+ * Example:
+ *   Given the product "Andromeda" with an image has the following releases:
+ *     | 2.0.0 | 2026-01-15 |
+ *     | 2.1.0 | 2026-06-01 |
+ */
+Given(/^the product "([^"]*)" with an image has the following releases:$/, { timeout: 10 * 60 * 1000 }, async function (product, table) {
+  const base = this.parameters.launchUrl;
+  await createImageMediaViaUi(this.page, base, `${product} image`);
+  await createProductWithImageViaUi(this.page, base, product);
+  for (const [tag, date] of table.raw()) {
+    await this.page.goto(`${base}/node/add/release`);
+    await this.page.locator('#edit-title-0-value').fill(tag.trim());
+    if (date && date.trim()) {
+      const dateField = this.page.locator('#edit-created-0-value-date');
+      // The "Authored on" date sits in the collapsed authoring details.
+      await dateField.evaluate((element) => {
+        const details = element.closest('details');
+        if (details) details.open = true;
+      });
+      await dateField.fill(date.trim());
+      await this.page.locator('#edit-created-0-value-time').fill('10:00:00');
+    }
+    const productField = this.page.getByLabel('Product', { exact: false }).first();
+    await productField.click();
+    await productField.pressSequentially(product, { delay: 80 });
+    await this.page
+      .locator('ul.ui-autocomplete li.ui-menu-item')
+      .filter({ hasText: product })
+      .first()
+      .waitFor({ state: 'visible', timeout: 10000 });
+    await productField.press('ArrowDown');
+    await productField.press('Enter');
+    await this.page.locator('#edit-submit').click();
+    await this.page.waitForLoadState('networkidle');
+  }
+});
+
+/**
+ * Assert that an image rendered with the given image style is visible.
+ *
+ * Example #1: Then I should see an image with the "large" image style
+ * Example #2: And I should see an image with the "medium" image style
+ */
+Then(/^(?:I |we )?should see an image with the "([^"]*)" image style$/, async function (style) {
+  await attempt(async () => {
+    const image = this.page.locator(`img[src*="/styles/${style}/"]`).first();
+    await image.waitFor({ state: 'visible', timeout: 10000 });
+  }, `Expected to see an image with the "${style}" image style`);
+});
 
 /**
  * Seed a product and a number of releases linked to it, all through the

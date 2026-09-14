@@ -53,6 +53,33 @@ third_party_settings:
       -
         source_id: entity_field
         source:
+          derivable_context: 'field:node:release:created'
+          'field:node:release:created':
+            value:
+              sources:
+                -
+                  source_id: 'field_formatter:node:release:created'
+                  source:
+                    type: timestamp
+                    label: hidden
+                    settings:
+                      date_format: custom
+                      custom_date_format: 'F j, Y'
+                      timezone: ''
+                      tooltip:
+                        date_format: long
+                        custom_date_format: ''
+                      time_diff:
+                        enabled: false
+                        future_format: '@interval hence'
+                        past_format: '@interval ago'
+                        granularity: 2
+                        refresh: 60
+                    third_party_settings: {  }
+                    weight: 2
+      -
+        source_id: entity_field
+        source:
           derivable_context: 'field:node:release:field_release_image'
           'field:node:release:field_release_image':
             value:
@@ -94,8 +121,8 @@ third_party_settings:
                     type: link
                     label: hidden
                     settings:
-                      trim_length: 100
-                      url_only: true
+                      trim_length: 30
+                      url_only: false
                       url_plain: false
                       rel: '0'
                       target: _blank
@@ -112,6 +139,25 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 101
+    region: content
+  created:
+    type: timestamp
+    label: hidden
+    settings:
+      date_format: custom
+      custom_date_format: 'F j, Y'
+      timezone: ''
+      tooltip:
+        date_format: long
+        custom_date_format: ''
+      time_diff:
+        enabled: false
+        future_format: '@interval hence'
+        past_format: '@interval ago'
+        granularity: 2
+        refresh: 60
+    third_party_settings: {  }
+    weight: -48
     region: content
   field_product:
     type: entity_reference_label
@@ -130,6 +176,18 @@ content:
     third_party_settings: {  }
     weight: 102
     region: content
+  field_release_link:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 30
+      url_only: false
+      url_plain: false
+      rel: '0'
+      target: _blank
+    third_party_settings: {  }
+    weight: 104
+    region: content
   links:
     settings: {  }
     third_party_settings: {  }
@@ -145,6 +203,4 @@ content:
     weight: -49
     region: content
 hidden:
-  created: true
-  field_release_link: true
   uid: true

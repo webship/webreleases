@@ -9,6 +9,7 @@ dependencies:
   module:
     - display_builder
     - manage_display
+    - media
     - smart_trim
     - text
 third_party_settings:
@@ -25,10 +26,13 @@ third_party_settings:
                 -
                   source_id: 'field_formatter:node:product:field_image'
                   source:
-                    type: entity_reference_entity_view
+                    type: media_thumbnail
                     label: hidden
                     settings:
-                      view_mode: square
+                      image_link: content
+                      image_style: medium
+                      image_loading:
+                        attribute: lazy
                     third_party_settings: {  }
                     weight: 0
       -
@@ -93,6 +97,17 @@ content:
     third_party_settings: {  }
     weight: 101
     region: content
+  field_image:
+    type: media_thumbnail
+    label: hidden
+    settings:
+      image_link: content
+      image_style: medium
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
+    weight: 102
+    region: content
   links:
     settings: {  }
     third_party_settings: {  }
@@ -109,5 +124,4 @@ content:
     region: content
 hidden:
   created: true
-  field_image: true
   uid: true
