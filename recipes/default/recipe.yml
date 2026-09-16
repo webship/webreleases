@@ -1,6 +1,12 @@
 name: 'Web Releases - Default'
 description: 'A recipe to manage default installed modules, configs and permissions.'
 type: install
+recipes:
+  # The Web Assets media stack, which creates the Image media type the product
+  # and release image fields reference. Installing the Web Assets module from
+  # the list below is not enough: a recipe installs modules with config entity
+  # installation disabled, so the media types of its own recipe are skipped.
+  - modules/contrib/webassets/recipes/default
 install:
   - path
   - pathauto
