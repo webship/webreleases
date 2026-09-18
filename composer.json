@@ -3,7 +3,6 @@
     "description": "Provide product and release content type along with customized views for the products page and dedicated releases pages.",
     "type": "drupal-module",
     "license": "GPL-1.0-or-later",
-    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Webship",
