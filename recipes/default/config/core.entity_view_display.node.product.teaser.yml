@@ -3,15 +3,15 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
-    - field.field.node.product.body
+    - field.field.node.product.field_body
     - field.field.node.product.field_image
+    - field.field.node.product.field_summary
+    - image.style.medium
     - node.type.product
   module:
     - display_builder
     - manage_display
     - media
-    - smart_trim
-    - text
 third_party_settings:
   display_builder:
     profile: default
@@ -55,33 +55,16 @@ third_party_settings:
       -
         source_id: entity_field
         source:
-          derivable_context: 'field:node:product:body'
-          'field:node:product:body':
+          derivable_context: 'field:node:product:field_summary'
+          'field:node:product:field_summary':
             value:
               sources:
                 -
-                  source_id: 'field_formatter:node:product:body'
+                  source_id: 'field_formatter:node:product:field_summary'
                   source:
-                    type: smart_trim
+                    type: basic_string
                     label: hidden
-                    settings:
-                      trim_length: 300
-                      trim_type: chars
-                      trim_suffix: ''
-                      wrap_output: false
-                      wrap_class: trimmed
-                      more:
-                        display_link: false
-                        target_blank: false
-                        link_trim_only: false
-                        class: more-link
-                        text: More
-                        aria_label: 'Read more about [node:title]'
-                      summary_handler: full
-                      trim_options:
-                        text: true
-                        trim_zero: false
-                        replace_tokens: false
+                    settings: {  }
                     third_party_settings: {  }
                     weight: 2
 id: node.product.teaser
@@ -89,14 +72,6 @@ targetEntityType: node
 bundle: product
 mode: teaser
 content:
-  body:
-    type: text_summary_or_trimmed
-    label: hidden
-    settings:
-      trim_length: 600
-    third_party_settings: {  }
-    weight: 101
-    region: content
   field_image:
     type: media_thumbnail
     label: hidden
@@ -107,6 +82,13 @@ content:
         attribute: lazy
     third_party_settings: {  }
     weight: 102
+    region: content
+  field_summary:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
     region: content
   links:
     settings: {  }
@@ -124,4 +106,6 @@ content:
     region: content
 hidden:
   created: true
+  field_body: true
+  field_summary: true
   uid: true

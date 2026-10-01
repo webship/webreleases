@@ -2,8 +2,9 @@ name: 'Web Releases - Default'
 description: 'A recipe to manage default installed modules, configs and permissions.'
 type: install
 recipes:
-  # The Webpage content, which creates the body field storage the product and
-  # release body fields reference, and the editorial workflow they move through.
+  # The Webpage content, which creates the body and summary field storages the
+  # product and release fields reference, and the editorial workflow they move
+  # through.
   # Installing the Webpage module from the list below is not enough: a recipe
   # installs modules with config entity installation disabled, so the config of
   # its own recipe is skipped.

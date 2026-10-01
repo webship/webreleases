@@ -2,8 +2,9 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.product.body
+    - field.field.node.product.field_body
     - field.field.node.product.field_image
+    - field.field.node.product.field_summary
     - node.type.product
   module:
     - content_moderation
@@ -15,21 +16,19 @@ targetEntityType: node
 bundle: product
 mode: default
 content:
-  body:
-    type: text_textarea_with_summary
-    weight: 121
-    region: content
-    settings:
-      rows: 9
-      summary_rows: 3
-      placeholder: ''
-      show_summary: false
-    third_party_settings: {  }
   created:
     type: datetime_timestamp
     weight: 10
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_body:
+    type: text_textarea
+    weight: 121
+    region: content
+    settings:
+      rows: 9
+      placeholder: ''
     third_party_settings: {  }
   field_image:
     type: media_library_widget
@@ -37,6 +36,14 @@ content:
     region: content
     settings:
       media_types: {  }
+    third_party_settings: {  }
+  field_summary:
+    type: string_textarea
+    weight: 122
+    region: content
+    settings:
+      rows: 3
+      placeholder: ''
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
@@ -94,4 +101,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_body: true
+  field_summary: true

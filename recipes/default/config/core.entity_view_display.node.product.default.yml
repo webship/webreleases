@@ -2,8 +2,9 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.product.body
+    - field.field.node.product.field_body
     - field.field.node.product.field_image
+    - field.field.node.product.field_summary
     - node.type.product
   module:
     - display_builder
@@ -37,12 +38,12 @@ third_party_settings:
       -
         source_id: entity_field
         source:
-          derivable_context: 'field:node:product:body'
-          'field:node:product:body':
+          derivable_context: 'field:node:product:field_body'
+          'field:node:product:field_body':
             value:
               sources:
                 -
-                  source_id: 'field_formatter:node:product:body'
+                  source_id: 'field_formatter:node:product:field_body'
                   source:
                     type: text_default
                     label: hidden
@@ -71,7 +72,7 @@ targetEntityType: node
 bundle: product
 mode: default
 content:
-  body:
+  field_body:
     type: text_default
     label: hidden
     settings: {  }
@@ -103,4 +104,6 @@ content:
     region: content
 hidden:
   created: true
+  field_body: true
+  field_summary: true
   uid: true

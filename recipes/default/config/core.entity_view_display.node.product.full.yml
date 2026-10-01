@@ -3,16 +3,14 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.full
-    - field.field.node.product.body
+    - field.field.node.product.field_body
     - field.field.node.product.field_image
+    - field.field.node.product.field_summary
     - node.type.product
-    - views.view.releases
   module:
     - display_builder
     - manage_display
-    - media
     - text
-    - views
 third_party_settings:
   display_builder:
     profile: default
@@ -39,12 +37,12 @@ third_party_settings:
       -
         source_id: entity_field
         source:
-          derivable_context: 'field:node:product:body'
-          'field:node:product:body':
+          derivable_context: 'field:node:product:field_body'
+          'field:node:product:field_body':
             value:
               sources:
                 -
-                  source_id: 'field_formatter:node:product:body'
+                  source_id: 'field_formatter:node:product:field_body'
                   source:
                     type: text_default
                     label: hidden
@@ -71,7 +69,7 @@ targetEntityType: node
 bundle: product
 mode: full
 content:
-  body:
+  field_body:
     type: text_default
     label: hidden
     settings: {  }
@@ -103,4 +101,6 @@ content:
     region: content
 hidden:
   created: true
+  field_body: true
+  field_summary: true
   uid: true
