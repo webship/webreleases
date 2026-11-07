@@ -1,0 +1,13 @@
+name: 'Web Releases content types'
+description: 'Creates the Product and Release content types and their fields.'
+type: install
+# The default recipe applies the Webpage and Web Assets recipes first: the
+# image fields reference their Image media type.
+install:
+  - node
+  - menu_ui
+  - text
+  - link
+  - media
+config:
+  strict: false

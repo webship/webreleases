@@ -33,6 +33,10 @@ follow:
 - Config entities that a module ships (shortcut sets, blocks, image styles)
   need an explicit `config.import` entry.
 
+Content types and fields live in `recipes/content_types`, which the default
+recipe applies before the displays: Display Builder derives a display's
+contexts from the fields that exist when the first display is saved.
+
 Guard install hooks so a config import does not run them twice:
 
 ```php

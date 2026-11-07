@@ -14,6 +14,9 @@ recipes:
   # the list below is not enough: a recipe installs modules with config entity
   # installation disabled, so the media types of its own recipe are skipped.
   - modules/contrib/webassets/recipes/default
+  # Every content type and field exists before the first display is saved:
+  # Display Builder derives the contexts of a display from the fields known then.
+  - content_types
 install:
   - path
   - pathauto
