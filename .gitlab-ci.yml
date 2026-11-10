@@ -14,6 +14,12 @@ variables:
   _TARGET_PHP: "8.4"
   YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
 
+.composer-base:
+  variables:
+    # Drupal core's own Yarn 4.9.1 would read the project .yarnrc.yml (Yarn >= 4.14 keys) too.
+    YARN_RC_FILENAME: .yarnrc.core.yml
+    YARN_NODE_LINKER: node-modules
+
 cspell:
   stage: validate
   image: node:24
@@ -29,7 +35,7 @@ cspell:
 #      files -- the main slowdown.
 #   2. `yarn install --mode=skip-build` skips postinstall (incl. webship-js
 #      pulling Playwright). Install drops to ~10s.
-#   3. Lockfile-keyed cache of `.yarn/cache` reused by later pipelines.
+#   3. package.json-keyed cache of `.yarn/cache` reused by later pipelines.
 # The paired .eslintignore excludes vendor/, .yarn/, web/ so `eslint .` only
 # lints real module source.
 .lint-yarn:
@@ -40,7 +46,7 @@ cspell:
   cache:
     key:
       files:
-        - yarn.lock
+        - package.json
     paths:
       - .yarn/cache
   before_script:
@@ -140,7 +146,7 @@ stylelint:
     # Display Builder 1.0.0-beta9 writes sample files as root during the recipe
     # import, so Apache could not upload into that dated directory.
     - chown -R www-data:www-data $CI_PROJECT_DIR/$_WEB_ROOT/sites/default/files
-    # ── Node.js 20 ──────────────────────────────────────────────────────────
+    # ── Node.js 24 ──────────────────────────────────────────────────────────
     - curl -fsSL https://deb.nodesource.com/setup_24.x | bash -
     - apt-get install -y nodejs
     - node --version && npm --version
