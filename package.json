@@ -4,8 +4,8 @@
   "description": "Provide product and release content type along with customized views for the products page and dedicated releases pages.",
   "license": "GPL-2.0",
   "engines": {
-    "yarn": ">= 1.6",
-    "node": ">= 18.0"
+    "yarn": ">= 4.18.1",
+    "node": ">= 24.0"
   },
   "resolutions": {
     "@cucumber/cucumber": "~10",
@@ -19,7 +19,7 @@
     "Webship"
   ],
   "author": "Webship.co",
-  "packageManager": "yarn@4.9.4",
+  "packageManager": "yarn@4.18.1",
   "scripts": {
     "phpcs": "phpcs --standard=./.phpcs.xml .",
     "phpcbf": "phpcbf --standard=./.phpcs.xml .",
@@ -27,10 +27,12 @@
     "lint:css": "stylelint \"**/*.css\"",
     "lint:yaml": "node ./node_modules/eslint/bin/eslint.js --cache --cache-location .eslintcache --ext .yml .",
     "test": "cucumber-js --config cucumber.js",
-    "test:headed": "HEADLESS=false cucumber-js --config cucumber.js"
+    "test:headed": "HEADLESS=false cucumber-js --config cucumber.js",
+    "test:dry": "cucumber-js --config cucumber.js --dry-run"
   },
   "devDependencies": {
     "@cucumber/cucumber": "~10",
+    "@webship-js/drupal-core-steps": "^2.1.0",
     "eslint": "~8",
     "eslint-config-airbnb-base": "~15",
     "eslint-config-prettier": "~8",
@@ -62,7 +64,7 @@
     "underscore": "~1",
     "webpack": "~5",
     "webpack-cli": "~5",
-    "webship-js": "~2.0"
+    "webship-js": "^2.0.6"
   },
   "browserslist": [
     "last 2 Chrome major versions",

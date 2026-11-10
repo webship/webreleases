@@ -14,3 +14,11 @@ node_modules
 # to the project root).
 /tests/reports/cucumber_report.html
 /tests/reports/cucumber_report.json
+# Yarn 4 (Berry) state; the cache is rebuilt by CI.
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnp.*

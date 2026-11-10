@@ -16,7 +16,7 @@ variables:
 
 cspell:
   stage: validate
-  image: node:18
+  image: node:24
   before_script:
     - npm install -g cspell
   script:
@@ -33,7 +33,7 @@ cspell:
 # The paired .eslintignore excludes vendor/, .yarn/, web/ so `eslint .` only
 # lints real module source.
 .lint-yarn:
-  image: node:18
+  image: node:24
   dependencies: []
   variables:
     YARN_ENABLE_GLOBAL_CACHE: "false"
@@ -160,6 +160,7 @@ stylelint:
 webship-js-test:
   extends: .drupal-node-base
   script:
+    - ./node_modules/.bin/cucumber-js --config cucumber.js --dry-run
     - ./node_modules/.bin/cucumber-js --config cucumber.js --tags "not @wip"
   artifacts:
     when: always
