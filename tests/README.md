@@ -80,8 +80,11 @@ a browser.
 
 ```
 48 scenarios (48 passed)
-__STEPS__ steps (__STEPS__ passed)
+297 steps (297 passed)
 ```
+
+CI runs all 50 scenarios (301 steps) on its Standard site, the two
+`@standard-profile` ones included.
 
 The HTML report is written to `tests/reports/cucumber_report.html`. A failed
 step leaves a screenshot in `tests/screenshots/` and a video in
