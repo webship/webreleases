@@ -31,7 +31,7 @@ third_party_settings:
                     label: hidden
                     settings:
                       link_to_entity: true
-                      tag: h3
+                      tag: h2
                     third_party_settings: {  }
                     weight: 0
       -
@@ -146,7 +146,7 @@ content:
     label: hidden
     settings:
       link_to_entity: true
-      tag: h3
+      tag: h2
     third_party_settings: {  }
     weight: 0
     region: content

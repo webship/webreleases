@@ -37,12 +37,28 @@ Feature: Advanced Web Releases — sample products and releases
      And I should see "Next"
     When I navigate to "/products/comet/releases?page=1"
     Then I should see 1 ".node--type-release" elements
+    # The pager heading follows the h2 of the releases, on the releases page
+    # and on the product page.
+    When I log out
+     And I navigate to "/products/comet/releases"
+    Then the heading hierarchy should be valid
+    When I navigate to "/products/comet"
+    Then I should see "Next"
+     And the heading hierarchy should be valid
 
+  # The lists start their headings at h2, under the h1 of the page: the
+  # products page, the releases page of a product and the releases on the
+  # product page.
   Scenario: Anonymous user can browse seeded products and releases
     Given the product "Stellar" has 4 releases
     When I log out
      And I navigate to "/products"
     Then I should see "Stellar"
+     And the heading hierarchy should be valid
     When I navigate to "/products/stellar/releases"
     Then I should see "Releases"
      And I should see 4 ".node--type-release" elements
+     And the heading hierarchy should be valid
+    When I navigate to "/products/stellar"
+    Then I should see 4 ".node--type-release" elements
+     And the heading hierarchy should be valid
