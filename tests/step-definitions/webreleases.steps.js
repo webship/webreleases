@@ -1,8 +1,125 @@
 'use strict';
 
 const path = require('path');
-const { Given, When, Then } = require('@cucumber/cucumber');
+const { Before, BeforeStep, AfterStep, After, Given, When, Then } = require('@cucumber/cucumber');
 const { friendly } = require('webship-js/tests/step-definitions/webship');
+const {
+  navigate,
+  submitInPage,
+  isAuthenticated,
+  loginWithForm,
+  resolveUser,
+  sessionStatus,
+  joinUrl,
+} = require('@webship-js/drupal-core-steps/tests/step-definitions/drupal-helpers');
+
+// ---------------------------------------------------------------------------
+// What a scenario creates, it removes
+// ---------------------------------------------------------------------------
+//
+// Every product, release and image a scenario creates, through the seeding
+// steps below or through a node add form it saves, is deleted after the
+// scenario, also after a failure: the site is left as the suite found it, and
+// the suite can run again on the same site. The deletion is the Webmaster's
+// work; a scenario that ends as a visitor is logged in as the Webmaster for it.
+
+/**
+ * The id of the node whose own page is open: what a node add form opens once
+ * the node is saved ("node/<nid>" in drupalSettings). Nothing else on the
+ * page counts, so a form that did not save gives nothing.
+ *
+ * @param {object} page Playwright page.
+ * @returns {Promise<string|null>}
+ */
+async function savedNodeId(page) {
+  await page.waitForLoadState('load').catch(() => {});
+  return page.evaluate(() => {
+    const settings = window.drupalSettings && window.drupalSettings.path;
+    const match = settings && typeof settings.currentPath === 'string' && settings.currentPath.match(/^node\/(\d+)$/);
+    return match ? match[1] : null;
+  }).catch(() => null);
+}
+
+/**
+ * Remember an entity the scenario created, to delete it after the scenario.
+ *
+ * @param {object} world The World.
+ * @param {string} type  "node" or "media".
+ * @param {string|number|null} id The entity id.
+ */
+function remember(world, type, id) {
+  if (!id) return;
+  const created = world.webreleasesCreated || (world.webreleasesCreated = []);
+  if (!created.some((item) => item.type === type && item.id === String(id))) {
+    created.push({ type, id: String(id) });
+  }
+}
+
+/**
+ * Delete one entity through its delete form. An entity that is gone already
+ * (the scenario deleted it) is skipped. Its edit form tells whether it is
+ * there: a media item has no page of its own unless the site gives media
+ * standalone URLs.
+ *
+ * @param {object} world The World.
+ * @param {{type: string, id: string}} item The entity.
+ * @returns {Promise<boolean>} Whether the entity is gone.
+ */
+async function deleteCreated(world, item) {
+  const url = joinUrl(world.launchUrl, `/${item.type}/${item.id}/edit`);
+  if ((await sessionStatus(world.page, url)) === 404) return true;
+  await navigate(world, `/${item.type}/${item.id}/delete`);
+  const form = 'form.confirmation';
+  if ((await world.page.locator(form).count()) === 0) return false;
+  await submitInPage(world, `${form} #edit-submit, ${form} [data-drupal-selector="edit-submit"]`, form);
+  return (await sessionStatus(world.page, url)) === 404;
+}
+
+Before(function () {
+  this.webreleasesCreated = [];
+});
+
+// A node add form that a step saves opens the new node: remember it.
+BeforeStep(function () {
+  this.webreleasesAddForm = Boolean(this.page) && /\/node\/add\/[^/?#]+/.test(this.page.url());
+});
+
+AfterStep(async function () {
+  if (!this.webreleasesAddForm || !this.page) return;
+  remember(this, 'node', await savedNodeId(this.page));
+});
+
+After({ timeout: 10 * 60 * 1000 }, async function () {
+  // The newest first: the releases before their product, the product before
+  // its image.
+  const created = (this.webreleasesCreated || []).slice().reverse();
+  if (!created.length || !this.page) return;
+  const admin = resolveUser(this, 'Webmaster');
+  if (!(await isAuthenticated(this))) {
+    await loginWithForm(this, admin.username, admin.password);
+  }
+  let left = [];
+  for (const item of created) {
+    if (!(await deleteCreated(this, item).catch(() => false))) left.push(item);
+  }
+  if (left.length) {
+    // Another account's session cannot delete them: once more as the Webmaster.
+    await loginWithForm(this, admin.username, admin.password);
+    const again = left;
+    left = [];
+    for (const item of again) {
+      if (!(await deleteCreated(this, item).catch(() => false))) left.push(item);
+    }
+  }
+  this.webreleasesCreated = [];
+  if (left.length) {
+    throw friendly({
+      message: 'The scenario could not remove what it created.',
+      cause: left.map((item) => `${item.type} ${item.id}`).join(', '),
+      hint: 'Delete them on the site before the next run.',
+    });
+  }
+});
 
 /**
  * Run a step body and rethrow any failure as a tester-friendly error.
@@ -32,6 +149,7 @@ async function createProductViaUi(page, baseUrl, title) {
   await page.locator('#edit-title-0-value').fill(title);
   await page.locator('input[value="Save"]').click();
   await page.waitForLoadState('networkidle');
+  return savedNodeId(page);
 }
 
 /**
@@ -63,6 +181,7 @@ async function createReleaseViaUi(page, baseUrl, releaseTitle, productTitle) {
   await productField.press('Enter');
   await page.locator('input[value="Save"]').click();
   await page.waitForLoadState('networkidle');
+  return savedNodeId(page);
 }
 
 /**
@@ -107,8 +226,13 @@ async function createProductWithImageViaUi(page, baseUrl, title) {
   await page
     .locator('[data-drupal-selector="edit-field-image-selection-0-remove-button"]')
     .waitFor({ state: 'visible', timeout: 20000 });
+  const mediaId = await page
+    .locator('input[name="field_image[selection][0][target_id]"]')
+    .inputValue()
+    .catch(() => null);
   await page.locator('#edit-submit').click();
   await page.waitForLoadState('networkidle');
+  return { mediaId, productId: await savedNodeId(page) };
 }
 
 /**
@@ -128,7 +252,9 @@ async function createProductWithImageViaUi(page, baseUrl, title) {
 Given(/^the product "([^"]*)" with an image has the following releases:$/, { timeout: 10 * 60 * 1000 }, async function (product, table) {
   const base = this.parameters.launchUrl;
   await createImageMediaViaUi(this.page, base, `${product} image`);
-  await createProductWithImageViaUi(this.page, base, product);
+  const { mediaId, productId } = await createProductWithImageViaUi(this.page, base, product);
+  remember(this, 'media', mediaId);
+  remember(this, 'node', productId);
   for (const [tag, date] of table.raw()) {
     await this.page.goto(`${base}/node/add/release`);
     await this.page.locator('#edit-title-0-value').fill(tag.trim());
@@ -154,6 +280,7 @@ Given(/^the product "([^"]*)" with an image has the following releases:$/, { tim
     await productField.press('Enter');
     await this.page.locator('#edit-submit').click();
     await this.page.waitForLoadState('networkidle');
+    remember(this, 'node', await savedNodeId(this.page));
   }
 });
 
@@ -183,13 +310,13 @@ Then(/^(?:I |we )?should see an image with the "([^"]*)" image style$/, async fu
  */
 Given(/^the product "([^"]*)" has (\d+) releases?$/, { timeout: 10 * 60 * 1000 }, async function (product, count) {
   const base = this.parameters.launchUrl;
-  await createProductViaUi(this.page, base, product);
+  remember(this, 'node', await createProductViaUi(this.page, base, product));
   const total = parseInt(count, 10);
   // Release titles intentionally do NOT include the product name —
   // webreleases_preprocess_node() prepends it on render — so we seed
   // with the version string only.
   for (let i = 1; i <= total; i += 1) {
-    await createReleaseViaUi(this.page, base, `1.0.${i - 1}`, product);
+    remember(this, 'node', await createReleaseViaUi(this.page, base, `1.0.${i - 1}`, product));
   }
 });
 
@@ -216,9 +343,9 @@ Given(/^the product "([^"]*)" has the following releases:$/, { timeout: 10 * 60 
     .raw()
     .map((row) => row[0].trim())
     .filter(Boolean);
-  await createProductViaUi(this.page, base, product);
+  remember(this, 'node', await createProductViaUi(this.page, base, product));
   for (const releaseTitle of titles) {
-    await createReleaseViaUi(this.page, base, releaseTitle, product);
+    remember(this, 'node', await createReleaseViaUi(this.page, base, releaseTitle, product));
   }
 });
 

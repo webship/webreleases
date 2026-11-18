@@ -3,6 +3,9 @@ Feature: Release content type
   I want to create Release content linked to a product
   So that I can publish releases for that product
 
+  Every product and release a scenario creates is deleted after the
+  scenario (tests/README.md), so the suite can run again on the same site.
+
   Background:
     Given I am a logged in user with the "Webmaster" user
 
@@ -23,12 +26,12 @@ Feature: Release content type
   Scenario: Admin can create a release for a product
     When I navigate to "/node/add/product"
      And I fill in "Drupal" for "Title"
-     And I press "Save"
+     And I save the content
     Then I should see "has been created"
     When I navigate to "/node/add/release"
      And I fill in "11.0.0" for "Release tag"
      And I select "Drupal" from the "Product" autocomplete
-     And I press "Save"
+     And I save the content
     Then I should see "has been created"
      And "h1" should contain text "11.0.0"
      And I should see "Drupal"

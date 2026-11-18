@@ -3,9 +3,9 @@ Feature: Advanced Web Releases — sample products and releases
   I want to seed sample products and releases to verify the full module flow
   So that I can verify both products listing and product release pages end-to-end
 
-  # The default recipe no longer ships sample content. Each scenario below
-  # seeds its own products and releases through the step definitions so the
-  # tests stay deterministic and idempotent.
+  The default recipe ships no sample content: each scenario seeds its own
+  products and releases, and they are deleted after the scenario
+  (tests/README.md), so the seeding scenarios can run again on the same site.
 
   Background:
     Given I am a logged in user with the "Webmaster" user

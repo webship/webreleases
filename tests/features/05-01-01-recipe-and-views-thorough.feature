@@ -24,11 +24,11 @@ Feature: Web Releases recipe + views thorough check
   #
   # NOTE on scenario isolation:
   # The "the product 'X' has N releases" step picks the first matching
-  # product from the entity-reference autocomplete, so a release created
-  # in scenario A and a release created in scenario B for the same name
-  # share one product node. The scenarios below avoid that by using
-  # *distinct* product names per scenario (or by exercising everything
-  # for a given product in a single scenario).
+  # product from the entity-reference autocomplete. Every product and
+  # release a scenario creates is deleted after the scenario
+  # (tests/README.md), so no product of an earlier scenario or run is
+  # there to be picked; the scenarios below still use distinct product
+  # names.
 
   # ── Recipe + landing page (anonymous baseline) ───────────────────────────
 

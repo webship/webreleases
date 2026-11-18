@@ -82,10 +82,8 @@ stylelint:
 #      `.testing-job-base`) which already has PHP, Apache, Drush, and MySQL.
 #   3. before_script installs Drupal + the module, then Node.js + yarn deps +
 #      Playwright Chromium. Test jobs only override `script:`.
-#   4. The site-install credentials (`webmaster` / `dD.123123ddd`) match the
-#      Webmaster fixture in cucumber.js worldParameters.users, which is what
-#      every BDD scenario logs in as via the role-based step:
-#        Given I am a logged in user with the "Webmaster" user
+#   4. The site build creates the accounts of cucumber.js
+#      (worldParameters.users) with drush; the suite only logs in.
 # ──────────────────────────────────────────────────────────────────────────────
 .drupal-node-base:
   extends: .testing-job-base
@@ -96,6 +94,14 @@ stylelint:
     - name: $_CONFIG_DOCKERHUB_ROOT/$_TARGET_DB_TYPE-$_TARGET_DB_VERSION:$_TARGET_DB_IMAGE_TAG
       alias: database
   variables:
+    # The accounts of cucumber.js worldParameters.users. Their passwords are
+    # made in before_script, for this throwaway site only.
+    DRUPAL_ADMIN_USER: "webmaster"
+    DRUPAL_ADMIN_MAIL: "webmaster@example.test"
+    DRUPAL_EDITOR_USER: "content_editor_user"
+    DRUPAL_EDITOR_MAIL: "content_editor_user@example.test"
+    DRUPAL_AUTHENTICATED_USER: "authenticated_user"
+    DRUPAL_AUTHENTICATED_MAIL: "authenticated_user@example.test"
     DRUPAL_TEST_BASE_URL: "http://localhost"
     LAUNCH_URL: "http://localhost"
     FORCE_COLOR: "1"
@@ -110,12 +116,16 @@ stylelint:
     - service apache2 start
     # ── Database ────────────────────────────────────────────────────────────
     - export SIMPLETEST_DB=mysql://$MYSQL_USER:$MYSQL_PASSWORD@database/$MYSQL_DATABASE
+    # ── Test account passwords, for this job only ──────────────────────────
+    - export DRUPAL_ADMIN_PASS=$(php -r "echo bin2hex(random_bytes(12));")
+    - export DRUPAL_EDITOR_PASS=$(php -r "echo bin2hex(random_bytes(12));")
+    - export DRUPAL_AUTHENTICATED_PASS=$(php -r "echo bin2hex(random_bytes(12));")
     # ── Drupal site install ─────────────────────────────────────────────────
-    # Credentials must match cucumber.js worldParameters.users.Webmaster.
     - $CI_PROJECT_DIR/vendor/bin/drush --root=$CI_PROJECT_DIR/$_WEB_ROOT site:install standard
         --db-url=$SIMPLETEST_DB
-        --account-name=webmaster
-        --account-pass=dD.123123ddd
+        --account-name="$DRUPAL_ADMIN_USER"
+        --account-mail="$DRUPAL_ADMIN_MAIL"
+        --account-pass="$DRUPAL_ADMIN_PASS"
         --site-name="Web Releases Test"
         -y
     # ── Webpage module compatibility ────────────────────────────────────────
@@ -144,9 +154,14 @@ stylelint:
     - $CI_PROJECT_DIR/vendor/bin/drush --root=$CI_PROJECT_DIR/$_WEB_ROOT en webreleases -y
     - $CI_PROJECT_DIR/vendor/bin/drush --root=$CI_PROJECT_DIR/$_WEB_ROOT cache:rebuild
     # The Update Manager can show "There is a security update available for your version of Drupal" as an
-    # error message on admin pages, and the step pack's `I add the testing users` reads any error message
-    # after the submit as a failed account creation. The suite does not use the Update Manager.
+    # error message on admin pages, which the message steps of the suite would read. The suite does not use
+    # the Update Manager.
     - $CI_PROJECT_DIR/vendor/bin/drush --root=$CI_PROJECT_DIR/$_WEB_ROOT pm:uninstall update -y
+    # ── Test accounts (cucumber.js worldParameters.users) ───────────────────
+    # The suite never creates or deletes an account: the site build does.
+    - $CI_PROJECT_DIR/vendor/bin/drush --root=$CI_PROJECT_DIR/$_WEB_ROOT user:create "$DRUPAL_EDITOR_USER" --mail="$DRUPAL_EDITOR_MAIL" --password="$DRUPAL_EDITOR_PASS"
+    - $CI_PROJECT_DIR/vendor/bin/drush --root=$CI_PROJECT_DIR/$_WEB_ROOT user:role:add content_editor "$DRUPAL_EDITOR_USER"
+    - $CI_PROJECT_DIR/vendor/bin/drush --root=$CI_PROJECT_DIR/$_WEB_ROOT user:create "$DRUPAL_AUTHENTICATED_USER" --mail="$DRUPAL_AUTHENTICATED_MAIL" --password="$DRUPAL_AUTHENTICATED_PASS"
     # Display Builder 1.0.0-beta9 writes sample files as root during the recipe
     # import, so Apache could not upload into that dated directory.
     - chown -R www-data:www-data $CI_PROJECT_DIR/$_WEB_ROOT/sites/default/files

@@ -3,6 +3,9 @@ Feature: Product content type
   I want to create and view Product content
   So that I can describe the products that have releases
 
+  Every product and release a scenario creates is deleted after the
+  scenario (tests/README.md), so the suite can run again on the same site.
+
   Background:
     Given I am a logged in user with the "Webmaster" user
 
@@ -15,14 +18,14 @@ Feature: Product content type
   Scenario: Admin can create a product
     When I navigate to "/node/add/product"
      And I fill in "Acme" for "Title"
-     And I press "Save"
+     And I save the content
     Then I should see "has been created"
      And I should see "Acme"
 
   Scenario: A created product is reachable at its products path
     When I navigate to "/node/add/product"
      And I fill in "Falcon" for "Title"
-     And I press "Save"
+     And I save the content
     Then I should see "has been created"
     When I navigate to "/products/falcon"
     Then I should see "Falcon"

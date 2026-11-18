@@ -3,6 +3,9 @@ Feature: Releases listing for multiple products
   I want each product's releases page to list all of its releases
   So that I can browse a full, paginated set of releases per product
 
+  Every product and release a scenario creates is deleted after the
+  scenario (tests/README.md), so the suite can run again on the same site.
+
   Background:
     Given I am a logged in user with the "Webmaster" user
 

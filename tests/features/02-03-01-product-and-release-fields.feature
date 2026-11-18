@@ -3,6 +3,9 @@ Feature: Product and release fields on the Web Releases pages
   I want product and release pages to show their fields
   So that I can see the product image, its releases, and each release version and date
 
+  Every product, release and image a scenario creates is deleted after the
+  scenario (tests/README.md), so the suite can run again on the same site.
+
   Background:
     Given I am a logged in user with the "Webmaster" user
 
